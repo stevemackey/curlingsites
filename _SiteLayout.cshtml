@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Mackey Website - Leagues</title>
+        <link rel="stylesheet" href="/CSS/StyleSheet.css" type="text/css">
+        <link rel="stylesheet" type="text/css"  href="CSS/Style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!--JQWidgets-->
+        <script src="https://www.jqwidgets.com/public/jqwidgets/jqx-all.js"></script>
+        <link href="https://www.jqwidgets.com/public/jqwidgets/styles/jqx.base.css" rel="stylesheet" type="text/css" />
+        <link href="https://www.jqwidgets.com/public/jqwidgets/styles/jqx.energyblue.css" rel="stylesheet" type="text/css" />        
+        <style type="text/css">
+        #jqxResponsivePanel, #content {
+            float: left;
+        }
+        .jqx-rc-all {
+            border-radius: 0px;
+        }
+    </style>
+    </head>
+    <body>
+        <header id="headline">
+            <div><h1>Curling League Manager</h1></div>
+        </header>
+        
+ 
+             <div class="float-left">
+                <nav class="navbar navbar-default">
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown">Menu
+                            <span class="glyphicon glyphicon-align-justify"></span>
+                        </button>
+                            <ul class="dropdown-menu" >
+                            <li class="active" ><a href="~/Default">Home</a></li>                            
+                            <li><a href="~/Admin Tools/Tools">Admin Tools</a></li>
+                            </ul>
+                    </div>
+                </nav>
+            </div>                
+            <section>
+                @RenderBody()
+            </section>
+
+        <footer id="footer"><div><p>@DateTime.Now.Year  - Site Created by Steve Mackey</p></div></footer>
+    </body>
+    
+</html>

@@ -1,0 +1,1079 @@
+﻿@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Home Page";
+}
+<!--Standings Page-->
+<div id="body" class="container" style="width: 100%; background-color: #b7f4b6">
+    <hgroup class="title">
+        <h1>Welcome to the Inglewood Monday Senior's League</h1>
+    </hgroup>
+        <p>The Inglewood Monday Senior's League promotes competitive curling in Calgary, by attracting the top 50+ year old curlers from the Calgary area.  The ultimate goal of having one or more of our teams represent Alberta at the National level.</p>
+        <p>The league is on Monday evenings at the Calgary Inglewood Golf and Curling Club.  All draws start at 4:30.</p>
+        <p>If you are interested in joining the league, or for more information, please contact Gord Dewar at <a href="jgdewar@shaw.ca">jgdewar@shaw.ca</a> <a href="tel:403-815-6655">403-815-6655</a> or Don Hier at <a href="mailto:donhier@shaw.ca">donhier@shaw.ca</a> <a href="tel:4038603524">403-860-3524</a></p>
+
+<div>
+<h2>Round 1 Standings</h2>
+<div id="jqxgrid"></div>
+<h2>Round 2 Standings</h2>
+<div id="jqxgrid2"></div>
+         <div class="col-sm-6">
+<div id="chartContainer3" style="width: 100% ; height: 360px;"></div>
+        </div>
+        <div class="col-sm-6">
+<div id='chartContainer1' style="width: 100% ; height: 180px;"></div>
+        
+<div id='chartContainer2' style="width: 100%; height: 180px;"></div>
+        </div>
+    </div>
+</div>
+<!--
+<h2>Playoffs</h2>
+
+-->
+</div>
+<script>
+    $(document).ready(function () {
+
+        // Once the league has been selected, get the standings for that league
+
+        var source = {
+            datatype: "json",
+            datafields: [{ name: 'Pool', type: 'string' },
+                                { name: 'Team_Name', type: 'string' },
+                                { name: 'Wins', type: 'int' },
+                                { name: 'Losses', type: 'int' },
+                                { name: 'Ties', type: 'int'}],
+            id: 'UID',
+            url: '/Services/GetStandings.cshtml/',
+            async: true
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source);
+        //console.info(source);
+        $("#jqxgrid").jqxGrid({
+            width: '100%',
+            autoheight: true,
+            altrows: true,
+            source: dataAdapter,
+            columns: [{ text: 'Pool', datafield: 'Pool', width: '10%' },
+                            { text: 'Team_Name', datafield: 'Team_Name', width: '30%' },
+                            { text: 'Wins', datafield: 'Wins', width: '20%' },
+                            { text: 'Losses', datafield: 'Losses', width: '20%' },
+                            { text: 'Ties', datafield: 'Ties', width: '20%'}]
+
+        });
+       var source = {
+            datatype: "json",
+            datafields: [{ name: 'Pool', type: 'string' },
+                                { name: 'Team_Name', type: 'string' },
+                                { name: 'Wins', type: 'int' },
+                                { name: 'Losses', type: 'int' },
+                                { name: 'Ties', type: 'int'}],
+            id: 'UID',
+            url: '/Services/GetStandings2.cshtml/',
+            async: true
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source);
+        //console.info(source);
+        $("#jqxgrid2").jqxGrid({
+            width: '100%',
+            autoheight: true,
+            altrows: true,
+            source: dataAdapter,
+            columns: [{ text: 'Pool', datafield: 'Pool', width: '10%' },
+                            { text: 'Team_Name', datafield: 'Team_Name', width: '30%' },
+                            { text: 'Wins', datafield: 'Wins', width: '20%' },
+                            { text: 'Losses', datafield: 'Losses', width: '20%' },
+                            { text: 'Ties', datafield: 'Ties', width: '20%'}]
+
+        });
+    });
+        var source = {
+        datatype: "json",
+        datafields: [{ name: 'Game_Date'},
+                    { name: 'RatingAvg'}],
+        id: 'UID',
+        url: '/Services/GetAvgbyWk.cshtml/',
+        async: true
+    };
+    var dataAdapter = new $.jqx.dataAdapter(source);
+    
+    //console.info(dataAdapter);
+    //console.info(source);
+    
+    var settings = {
+        title: "Average Ice Rating by Week",
+        enableAnimations: true,
+        showLegend: false,
+        padding: { left: 10, top: 5, right: 10, bottom: 5 },
+        titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+        source: dataAdapter,
+        xAxis:
+                    {
+                        dataField: 'Game_Date',             
+                        baseUnit: 'week',
+                        valuesOnTicks: true,
+                        
+                        unitInterval: 1,
+                        axisSize: 'auto',
+                        tickMarks: {
+                            visible: true,
+                            interval: 1
+                        },
+                        gridLines: {
+                            visible: true,
+                            interval: 1
+                        },
+                        labels: {
+                        angle: -45,
+                        rotationPoint: 'topright',
+                        offset: { x: 0, y: -25 }
+                    }
+                    },
+        valueAxis:
+                {
+                    unitInterval: 2,
+                    minValue: 0,
+                    maxValue: 10,
+                    title: { text: 'Average' },
+                    labels: { horizontalAlignment: 'right' },
+                    tickMarks: { color: '#BCBCBC' }
+                },
+        colorScheme: 'scheme06',
+        seriesGroups:
+                    [
+                        {
+                            type: 'stackedcolumn',
+                            columnsGapPercent: 50,
+                            seriesGapPercent: 0,
+                            series: [
+                                    { dataField: 'RatingAvg', displayText: 'Average' }]
+                        }
+                    ]
+
+    };
+
+    $('#chartContainer1').jqxChart(settings);
+
+        var source = {
+        datatype: "json",
+        datafields: [{ name: 'Sheet_Number'},
+                    { name: 'RatingAvg'}],
+        id: 'UID',
+        url: '/Services/GetAvgbySht.cshtml/',
+        async: true
+    };
+    var dataAdapter = new $.jqx.dataAdapter(source);
+    
+    //console.info(dataAdapter);
+    //console.info(source);
+    
+    var settings = {
+        title: "Average Ice Rating by Sheet",
+        enableAnimations: true,
+        showLegend: false,
+        padding: { left: 10, top: 5, right: 10, bottom: 5 },
+        titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+        source: dataAdapter,
+        xAxis:
+                    {
+                        dataField: 'Sheet_Number',             
+                        valuesOnTicks: true,
+                        
+                        unitInterval: 1,
+                        axisSize: 'auto',
+                        tickMarks: {
+                            visible: true,
+                            interval: 1
+                        },
+                        gridLines: {
+                            visible: true,
+                            interval: 1
+                        }
+                    },
+        valueAxis:
+                {
+                    unitInterval: 2,
+                    minValue: 0,
+                    maxValue: 10,
+                    title: { text: 'Average' },
+                    labels: { horizontalAlignment: 'right' },
+                    tickMarks: { color: '#BCBCBC' }
+                },
+        colorScheme: 'scheme06',
+        seriesGroups:
+                    [
+                        {
+                            type: 'stackedcolumn',
+                            columnsGapPercent: 50,
+                            seriesGapPercent: 0,
+                            series: [
+                                    { dataField: 'RatingAvg', displayText: 'Average' }]
+                        }
+                    ]
+
+    };
+
+    $('#chartContainer2').jqxChart(settings);
+
+            var source = {
+        datatype: "json",
+        datafields: [{ name: 'Game_Winner'},
+                    { name: 'RatingAvg'}],
+        id: 'UID',
+        url: '/Services/GetAvgbyTm.cshtml/',
+        async: true
+    };
+    var dataAdapter = new $.jqx.dataAdapter(source);
+    
+    //console.info(dataAdapter);
+    //console.info(source);
+    
+    var settings = {
+        title: "Average Ice Rating by Team",
+        enableAnimations: true,
+        showLegend: false,
+        padding: { left: 10, top: 5, right: 10, bottom: 5 },
+        titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+        source: dataAdapter,
+        xAxis:
+                    {
+                        dataField: 'Game_Winner',             
+                        valuesOnTicks: true,
+                        
+                        unitInterval: 1,
+                        axisSize: 'auto',
+                        tickMarks: {
+                            visible: true,
+                            interval: 1
+                        },
+                        gridLines: {
+                            visible: true,
+                            interval: 1
+                        },
+                        labels: {
+                        angle: -45,
+                        rotationPoint: 'topright',
+                        offset: { x: 0, y: -25 }
+                    }
+                    },
+        valueAxis:
+                {
+                    unitInterval: 2,
+                    minValue: 0,
+                    maxValue: 10,
+                    title: { text: 'Average' },
+                    labels: { horizontalAlignment: 'right' },
+                    tickMarks: { color: '#BCBCBC' }
+                },
+        colorScheme: 'scheme06',
+        seriesGroups:
+                    [
+                        {
+                            type: 'stackedcolumn',
+                            columnsGapPercent: 50,
+                            seriesGapPercent: 0,
+                            series: [
+                                    { dataField: 'RatingAvg', displayText: 'Average' }]
+                        }
+                    ]
+
+    };
+
+    $('#chartContainer3').jqxChart(settings);
+</script>
+
+<!--Schedule Section-->
+<div class="container" style="background-color: #bcd4f1; width: 100%">
+    <hgroup class="title">
+        <h1>Schedule</h1>
+    </hgroup>
+        <p>The following table shows the full schedule for the league.</p>  
+        <p>The table can be filtered to show games on a specific date, or a specific month.  To do that, click the triangle beside the date header.  Type the date, month or year to only display games for that date.</p> 
+        <p>The table can also be filtered to show an individual team's games.  To do that, click the triangle beside the game header.  Type a team's name or a portion of the name to display only the games for that team.</p>
+        <p>You can also use a combination of the two filters.  To get an individual team's games in January, click on the triangle best the date header and type Jan, then click filter.  Click on the triangle beside the game header and type the team's name and click filter.</p>
+
+
+    <div>
+        <div id="schedulejqxWidget">
+            <div id="myPivotGrid" style="height: 250px; width: auto; background-color: white;"></div>
+        </div>
+        <div class="col-sm-12">
+            <h2>Sheet Distribution</h2>
+            <div id='chartContainer' style="width: 100%; height:300px;"></div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+     var source = {
+        datatype: "json",
+        datafields: [{ name: 'Team_Name', type: 'string' },
+                                { name: 'One', type: 'int' },
+                                { name: 'Two', type: 'int' },
+                                { name: 'Three', type: 'int' },
+                                { name: 'Four', type: 'int' },
+                                { name: 'Five', type: 'int' },
+                                { name: 'Six', type: 'int' }],
+        id: 'ID',
+        url: '/Services/GetSheetDist.cshtml/',
+        async: true
+    };
+    var dataAdapter = new $.jqx.dataAdapter(source);
+    
+    //console.info(dataAdapter);
+    //console.info(source);
+    
+    var settings = {
+        title: "Sheet Distribution",
+        enableAnimations: true,
+        showLegend: true,
+        padding: { left: 10, top: 5, right: 10, bottom: 5 },
+        titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+        source: dataAdapter,
+        xAxis:
+                    {
+                        dataField: 'Team_Name',
+                        unitInterval: 1,
+                        axisSize: 'auto',
+                        tickMarks: {
+                            visible: true,
+                            interval: 1
+                        },
+                        gridLines: {
+                            visible: true,
+                            interval: 1
+                        },
+                        labels: {
+                        angle: -45,
+                        rotationPoint: 'topright',
+                        offset: { x: 0, y: -25 }
+                    }
+                    },
+        valueAxis:
+                {
+                    unitInterval: 1,
+                    minValue: 0,
+                    maxValue: 'auto',
+                    title: { text: 'Sheet Distribution' },
+                    labels: { horizontalAlignment: 'right' },
+                    tickMarks: { color: '#BCBCBC' }
+                },
+        colorScheme: 'scheme06',
+        seriesGroups:
+                    [
+                        {
+                            type: 'stackedcolumn',
+                            columnsGapPercent: 50,
+                            seriesGapPercent: 0,
+                            series: [
+                                    { dataField: 'One', displayText: '1' },
+                                    { dataField: 'Two', displayText: '2' },
+                                    { dataField: 'Three', displayText: '3' },
+                                    { dataField: 'Four', displayText: '4' },
+                                    { dataField: 'Five', displayText: '5' },
+                                    { dataField: 'Six', displayText: '6' }
+                                ]
+                        }
+                    ]
+
+    };
+
+    $('#chartContainer').jqxChart(settings);
+
+// Get schedule for selected league and show in a pivot grid
+            var buildpivot = $.getJSON("/Services/GetSchedule.cshtml/" + selectleague, function (data) {
+                console.log("Display the pivot grid");
+                var source =
+                                        {
+                                            localdata: data,
+                                            datatype: "json",
+                                            datafields:
+                                        [
+                                        { name: 'Game_ID', type: 'string' },
+                                        { name: 'League_ID', type: 'string' },
+                                        { name: 'Home_Team_ID', type: 'string' },
+                                        { name: 'Away_Team_ID', type: 'string' },
+                                        { name: 'Date', type: 'string' },
+                                        { name: 'Time', type: 'string' },
+                                        { name: 'League_Name', type: 'string' },
+                                        { name: 'Home_Team', type: 'string' },
+                                        { name: 'Away_Team', type: 'string' },
+                                        { name: 'Sheet', type: 'number' },
+                                        { name: 'Game_Submit', type: 'string' },
+                                        { name: 'Playoff', type: 'string' }
+                                        ]
+                                        };
+
+                var dataAdapter = new $.jqx.dataAdapter(source);
+                dataAdapter.dataBind();
+
+                //console.log(dataAdapter);
+
+                //console.log("show the dataAdapter");
+                //console.log(dataAdapter);
+
+                var getCellValue = function (row, col) {
+                    var currentDateRecords = [];
+                    for (i = 0; i < data.length; i++) {
+                        if (data[i].Date == row.text && data[i].Sheet == col.parentItem.adapterItem.text) {
+                            currentDateRecords.push({ home: data[i].Home_Team, away: data[i].Away_Team });
+                        }
+                    }
+
+                    return currentDateRecords;
+                };
+
+                // create a pivot data source from the dataAdapter
+                var pivotDataSource = new $.jqx.pivot(
+                                                  dataAdapter,
+                                                  {
+                                                      autoresize: 'true',
+                                                      resizable: 'true',
+                                                      pivotValuesOnRows: false,
+                                                      rows: [
+                                                            { dataField: 'Date', resizable: 'false', height: 30 },
+                                                            { dataField: 'Time', resizable: 'false', height: 30 }
+                                                      ],
+                                                      columns: [
+                                                            { dataField: 'Sheet', align: 'Center', resizable: 'true', autoresize: 'true' }
+                                                      ],
+                                                      values: [
+                                                        { dataField: 'Home_Team', text: 'Home Team', align: 'Center' },
+                                                        { dataField: 'Away_Team', text: 'Away Team', align: 'Center' }
+                                                      ]
+                                                  }
+                                                );
+                var isFirst = true;
+
+                $('#myPivotGrid').jqxPivotGrid(
+                                                  {
+                                                      source: pivotDataSource,
+                                                      treeStyleRows: false,
+                                                      multipleSelectionEnabled: true,
+                                                      scrollBarsEnabled: true,
+                                                      selectionEnabled: true,
+                                                      autoResize: false,
+                                                      cellsRenderer: function (pivotCell) {
+                                                          var row = pivotCell.pivotRow;
+                                                          var col = pivotCell.pivotColumn;
+
+                                                          var teams = [];
+                                                          var cellText = '';
+                                                          var hasAdditionalText = false;
+                                                          var size = 25;
+                                                          if (!!pivotCell.value) {
+                                                              teams = getCellValue(row, col);
+                                                              if (col.text == "Away Team") {
+                                                                  cellText = teams[0].away;
+                                                                  cellText.length > 6 ? hasAdditionalText = true : hasAdditionalText = false;
+                                                                  size = 30;
+                                                                  //size = Math.round((cellText.length * 2) / 10) * 20;
+                                                              } else {
+                                                                  cellText = teams[0].home;
+                                                              }
+                                                          }
+
+                                                          if (isFirst && hasAdditionalText) {
+                                                              isFirst = false;
+                                                              setTimeout(function () {
+                                                                  pivotDataSource.rows[0].height = size;
+                                                                  pivotDataSource.dataBind();
+                                                                  $('#myPivotGrid').jqxPivotGrid({ source: pivotDataSource });
+                                                              }, 500);
+                                                          }
+
+                                                          return "<div style='width: calc(100%-8px); height: 100%; padding: 4px; margin: 0px;'>" + cellText + "</div>";
+                                                      }
+                                                  }
+                                );
+            });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var dateSelect = $('#dateList');
+        dateSelect.attr('disabled', true)
+        document.getElementById("dateList").style.visibility = "hidden";
+        document.getElementById("dateP").style.visibility = "hidden";
+
+        var gameSelect = $('#gameList');
+        gameSelect.attr('disabled', true);
+        document.getElementById("gameList").style.visibility = "hidden";
+        document.getElementById("gameP").style.visibility = "hidden";
+
+        var gameuidSelect = $('#gameuidList');
+        gameuidSelect.attr('disabled', true);
+        document.getElementById("gameuidList").style.visibility = "hidden";
+        document.getElementById("gameuidP").style.visibility = "hidden";
+
+        var sheetSelect = $('#sheetList');
+        sheetSelect.attr('disabled', true);
+        document.getElementById("sheetList").style.visibility = "hidden";
+        document.getElementById("sheetP").style.visibility = "hidden";
+
+        var playoffSelect = $('#playoffList');
+        playoffSelect.attr('disabled', true);
+        document.getElementById("playoffList").style.visibility = "hidden";
+        document.getElementById("playoffP").style.visibility = "hidden";
+
+        var tieSelect = $('#tieList');
+        tieSelect.attr('disabled', true);
+        document.getElementById("tieList").style.visibility = "hidden";
+        document.getElementById("tieP").style.visibility = "hidden";
+
+        var winnerSelect = $('#winnerList');
+        winnerSelect.attr('disabled', true);
+        document.getElementById("winnerList").style.visibility = "hidden";
+        document.getElementById("winnerP").style.visibility = "hidden";
+
+        var loserSelect = $('#loserList');
+        loserSelect.attr('disabled', true);
+        document.getElementById("loserList").style.visibility = "hidden";
+        document.getElementById("loserP").style.visibility = "hidden";
+
+        var nameSelect = $('#nameList');
+        nameSelect.attr('disabled', true);
+        document.getElementById("nameList").style.visibility = "hidden";
+        document.getElementById("nameP").style.visibility = "hidden";
+
+        var emailSelect = $('#emailList');
+        emailSelect.attr('disabled', true);
+        document.getElementById("emailList").style.visibility = "hidden";
+        document.getElementById("emailP").style.visibility = "hidden";
+
+        var ratingSelect = $('#ratingList');
+        ratingSelect.attr('disabled', true);
+        document.getElementById("ratingList").style.visibility = "hidden";
+        document.getElementById("ratingP").style.visibility = "hidden";
+
+        document.getElementById("comments").style.visibility = "hidden";
+        document.getElementById("commentsP").style.visibility = "hidden";
+
+        document.getElementById("subresults").style.visibility = "hidden";
+
+        /*Enable and Un-Hide the elements of the table one at a time. */
+
+        $.getJSON('Services/GetDates/', function (dates) {
+            document.getElementById("dateList").style.visibility = "visible";
+            document.getElementById("dateP").style.visibility = "visible";
+            //console.info(dates);
+            dateSelect.attr('disabled', false);
+            dateSelect.empty();
+            dateSelect.append(
+                                                                   $('<option/>')
+                                                                       .attr('value', '')
+                                                                       .text('-- Select Date --'));
+            $.each(dates, function (index, date) {
+                dateSelect.append(
+                                                                   $('<option/>')
+                                                                       .attr('value', date.Game_Dates)
+                                                                       .text(date.Game_Dates)
+                                               );
+            });
+        });
+
+        $('#dateList').change(function () {
+            var gameList = $(this).val();
+            //console.info(gameList);
+            $.getJSON('Services/GetGames/' + gameList, function (games) {
+                //console.info(games);
+                document.getElementById("gameList").style.visibility = "visible";
+                document.getElementById("gameP").style.visibility = "visible";
+                gameSelect.attr('disabled', false);
+                gameSelect.empty();
+                gameSelect.append(
+                                            $('<option/>')
+                                                .attr('value', '')
+                                                .text('-- Select Game --'));
+                $.each(games, function (index, game) {
+                    gameSelect.append(
+                                            $('<option/>')
+                                                .attr('value', game.Game)
+                                                .text(game.Game)
+                     );
+                });
+                tieSelect.attr('disabled', false);
+                document.getElementById("tieList").style.visibility = "visible";
+                document.getElementById("tieP").style.visibility = "visible";
+            });
+        });
+
+
+        $('#gameList').change(function () {
+            var gameList = $(this).val();
+            //console.info(gameList);
+            $.getJSON('Services/GetGameUID/' + gameList, function (uids) {
+                //console.info(uids);
+                gameuidSelect.attr('disabled', false);
+                sheetSelect.attr('disabled', false);
+                playoffSelect.attr('disabled', false);
+                gameuidSelect.empty();
+                $.each(uids, function (index, uid) {
+                    $(gameuidSelect).attr('value', uid.Game_ID);
+                    $(sheetSelect).attr('value', uid.Sheet_Number);
+                    $(playoffSelect).attr('value', uid.Playoffs);
+                });
+            });
+            $.getJSON('Services/GetWinner/' + gameList, function (winners) {
+                //console.info(winners);
+                document.getElementById("winnerList").style.visibility = "visible";
+                document.getElementById("winnerP").style.visibility = "visible";
+                winnerSelect.attr('disabled', false);
+                winnerSelect.empty();
+                winnerSelect.append(
+                                            $('<option/>')
+                                                .attr('value', '')
+                                                .text('-- Select Winning Team --'));
+                $.each(winners, function (index, winner) {
+                    winnerSelect.append(
+                                            $('<option/>')
+                                                .attr('value', winner.Teams)
+                                                .text(winner.Teams)
+                             );
+                });
+            });
+        });
+
+        $('#winnerList').change(function () {
+            var winnerList = $(this).val();
+            var gameID = $(gameuidSelect).val();
+            //console.info(winnerList , gameID);
+            $.getJSON('Services/GetLoser/' + winnerList + "/" + gameID, function (losers) {
+                //console.info(losers);
+                loserSelect.attr('disabled', false);
+                $.each(losers, function (index, loser) {
+                    loserSelect.append(
+                                                                   $('<option/>')
+                                                                       .attr('value', loser.Teams)
+                                                                       .text(loser.Teams)
+                                            );
+                });
+
+                //console.info(loserList);
+                //console.info(winnerList);
+            })
+
+
+            $.getJSON('Services/GetName/' + winnerList, function (names) {
+                //console.info(names);
+                document.getElementById("nameList").style.visibility = "visible";
+                document.getElementById("nameP").style.visibility = "visible";
+                nameSelect.attr('disabled', false);
+                nameSelect.empty();
+                nameSelect.append(
+                                            $('<option/>')
+                                                .attr('value', '')
+                                                .text(' -- Select Your Name --'));
+                $.each(names, function (index, name) {
+                    nameSelect.append(
+                                            $('<option/>')
+                                                .attr('value', name.Name)
+                                                .text(name.Name)
+                             );
+                });
+            });
+        });
+        $('#nameList').change(function () {
+            var emailList = $(this).val();
+            $.getJSON('Services/GetEmail/' + emailList, function (emails) {
+                //console.info(emails);
+                emailSelect.attr('disabled', true);
+                /*                document.getElementById("emailList").style.visibility = "visible";
+                document.getElementById("emailP").style.visibility = "visible";*/
+                emailSelect.attr('disabled', false);
+                emailSelect.empty();
+                $.each(emails, function (index, email) {
+                    $(emailSelect).attr('value', email.Email);
+                });
+            });
+            $.getJSON('Services/GetRating/', function (data) {
+                //console.info(data);
+                ratingSelect.attr('disabled', false);
+                document.getElementById("ratingList").style.visibility = "visible";
+                document.getElementById("ratingP").style.visibility = "visible";
+                ratingSelect.append(
+                                                               $('<option/>')
+                                                                   .attr('value', '')
+                                                                   .text(' -- Ice Rating --'));
+
+                $.each(data, function (index, ratings) {
+                    ratingSelect.append(
+                                                               $('<option/>')
+                                                                   .attr('value', ratings.Rating)
+                                                                   .text(ratings.Rating)
+                                   );
+                });
+            });
+        });
+
+        $('#ratingList').change(function () {
+            document.getElementById("comments").style.visibility = "visible";
+            document.getElementById("commentsP").style.visibility = "visible";
+            document.getElementById("subresults").style.visibility = "visible";
+        });
+    });
+
+
+    function stopRKey(evt) {
+        var evt = (evt) ? evt : ((event) ? event : null);
+        var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+        if ((evt.keyCode == 13) && (node.type == "text")) { return false; }
+    }
+
+    document.onkeypress = stopRKey;
+</script> 
+
+<div class="container" style="width: 100%; background-color: #b7f4b6">
+        <hgroup class="title">
+  <h1>Game Submission Form</h1>
+  </hgroup>
+    <p>The winning third must complete the game summary form at the conclusion of the game.</p>
+    <p>The results will automatically be posted to the standings on the Home Page.</p>
+    <p><b>Special Instructions for Ties:</b> Once a Date and Game have been selected, change the Tie Indicator to a Y, then choose your team as the winner.  This will allow you to pick your name from the team profile database.  It will also ensure that both teams are credited with a Tie.</p>
+
+<form method="post" name="gamesubmitform" action="~/Services/GametoCurling.cshtml">
+<table>
+    <tr><td><p id="dateP">Please select a game Date:</p></td>
+    <td><select id="dateList" name="dateList"></select></td></tr>
+    <tr><td><p id="gameP">Please choose a Game:</p></td>
+    <td><select id="gameList" name="gameList"></select></td></tr>
+    <tr><td><p id="tieP">Did Game Result in a Tie:</p></td>
+    <td><select id="tieList" name="tieList"><option value="0">N</option><option value="1">Y</option></select></td></tr>
+    <tr><td><p id="winnerP">Please select the Winning Team, or your team in the case of a tie:</p></td>
+    <td><select id="winnerList" name="winnerList"></select></td></tr>
+    <tr><td><p id="nameP">Please select your Name from the Team Profile List:</p></td>
+    <td><select id="nameList" name="nameList"></select></td></tr>
+    <tr><td><p id="ratingP">Ice Rating from 10 good to 1 bad</p></td>
+    <td><select id="ratingList" name="ratingList"></select></td></tr>
+    <tr><td><p id="commentsP">Comments on the ice:</p></td>
+    <td><textarea id="comments" name="comments"></textarea></td></tr>
+    <tr><td></td><td><input id="subresults" type="submit" value="Submit"></td></tr>
+    <tr><td></td></tr>
+    <tr><td><p id="gameuidP">Game UID:</p></td>
+    <td><input id="gameuidList" name="gameuidList"></td></tr>
+    <tr><td><p id="sheetP">Please choose a Sheet:</p></td>
+    <td><input type="text" id="sheetList" name="sheetList"></td></tr>
+    <tr><td><p id="playoffP">Is This a Playoff Game:</p></td>
+    <td><input type="number" id="playoffList" name="playoffList"></td></tr>
+    <tr><td><p id="loserP">Please select the Losing Team:</p></td>
+    <td><select id="loserList" name="loserList"></select></td></tr>
+    <tr><td><p id="emailP">Please select your email from the Team Profile List:</p></td>
+    <td><input type="email" id="emailList" name="emailList"></td></tr>
+</table>
+</form>
+<div id="results"></div>
+</div>
+
+<!--Team Profile Section-->
+<div class="container" style="background-color: #bcd4f1; width: 100%">
+<style>
+
+.node circle {
+  fill: #999;
+}
+
+.node text {
+  font: 14px sans-serif;
+}
+
+.node--internal circle {
+  fill: #555;
+}
+
+.node--internal text {
+  text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+}
+
+.link {
+  fill: #fff;
+  stroke: #555;
+  stroke-opacity: 0.4;
+  stroke-width: 1.5px;
+}
+
+</style>
+        <hgroup class="title"><h1>Team Profile</h1></hgroup>
+
+    <div id="jqxgrid"></div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div id="drawdraw" class="col-sm-12">
+            <svg width="1020" height="900"></svg>
+            <input id="nameSelect" hidden="hidden">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var svg = d3.select("svg"),
+                    width = +svg.attr("width"),
+                    height = +svg.attr("height"),
+                    g = svg.append("g").attr("transform", "translate(" + (width / 2) + "," + (height / 2 - 90) + ")");
+
+    var stratify = d3.stratify();
+
+    var tree = d3.tree()
+                    .size([width / 3.5, height / 3.5])
+                    .separation(function (a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+
+    $.getJSON('Services/GetAllTeams/', function (teams) {
+        //console.log("teams: ", teams);
+
+        var root = tree(stratify(teams));
+        //console.log(root);
+
+        var link = g.selectAll(".link")
+                    .data(root.descendants().slice(1))
+                    .enter().append("path")
+                      .attr("class", "link")
+                      .attr("d", function (d) {
+                          return "M" + project(d.x, d.y)
+                            + "C" + project(d.x, (d.y + d.parent.y) / 2)
+                            + " " + project(d.parent.x, (d.y + d.parent.y) / 2)
+                            + " " + project(d.parent.x, d.parent.y);
+                      });
+
+        var node = g.selectAll(".node")
+                    .data(root.descendants())
+                    .enter().append("g")
+                      .attr("class", function (d) { return "node" + (d.children ? " node--internal" : " node--leaf"); })
+                      .attr("transform", function (d) { return "translate(" + project(d.x, d.y) + ")"; });
+
+        node.append("circle")
+                      .attr("r", 2.5);
+
+        node.append("text")
+                      .attr("dy", ".31em")
+                      .attr("x", function (d) { return d.x < 180 === !d.children ? 6 : -6; })
+                      .style("text-anchor", function (d) { return d.x < 180 === !d.children ? "start" : "end"; })
+                      .attr("transform", function (d) { return "rotate(" + (d.x < 180 ? d.x - 90 : d.x + 90) + ")"; })
+                      .text(function (d) { return d.id.substring(d.id.lastIndexOf(".") + 1); })
+                        .on("mouseover", function (d) {
+                            d3.select(this)
+                                                            .attr("fill", "red")
+                                                            .attr("cursor", "pointer")
+                        })
+                                            .on("mouseleave", function (d) {
+                                                d3.select(this)
+                                                            .attr("fill", "black")
+                                                            .attr("cursor", "auto")
+                                            })
+                                            .attr("font-size", "18px")
+                                            .on("click", clack);
+
+        function clack(d) {
+
+            nameSelect = d.data.id
+            document.getElementById("nameSelect").value = d.data.id
+            document.getElementById("nameSelect").innerHTML = d.data.id
+
+            //console.log(nameSelect)
+
+            var linkrenderer = function (row, column, value) {
+                var href = value
+                if (value.indexOf('#') != -1) { value = value.substring(0, value.indexOf('#')); }
+                return "<a href=mailto:" + href + ">" + value + "</a>";
+            }
+
+            var source = {
+                datatype: "json",
+                datafields: [{ name: 'Team_Name', type: 'string' },
+                                       { name: 'Name', type: 'string' },
+                                       { name: 'Position', type: 'string' },
+                                       { name: 'Phone_Number', type: 'string' },
+                                       { name: 'Email', type: 'string'}],
+                id: 'UID',
+                url: 'services/GetPlayer.cshtml/' + nameSelect,
+                async: true
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            $("#jqxgrid").jqxGrid({
+                width: '100%',
+                autoheight: true,
+                altrows: true,
+                source: dataAdapter,
+                columns: [{ text: 'Name', datafield: 'Name', width: '22%' },
+                                   { text: 'Position', datafield: 'Position', width: '22%' },
+                                   { text: 'Phone', datafield: 'Phone_Number', width: '22%' },
+                                   { text: 'Email', datafield: 'Email', width: '22%', cellsrenderer: linkrenderer }
+                                   ]
+            });
+        }
+    });
+    function project(x, y) {
+        var angle = (x - 90) / 180 * Math.PI, radius = y;
+        return [radius * Math.cos(angle), radius * Math.sin(angle)];
+    };
+
+</script>
+
+<!--Spares Section-->
+<div class="container" style="width: 100%; background-color: #b7f4b6">
+        <hgroup class="title">
+  <h1>Spares</h1>
+  </hgroup>
+<p>Please contact a spare on our spares list if you are short a player.</p> 
+<p>Spares can register by completing the Spares registration form.</p>
+
+<div id="jqxgrid"></div>
+<br>
+<div style="margin-top: 30px;">
+    <input id="addsparebutton" type="button" value="Create Spare" />
+    <div id="cellbegineditevent"></div>
+    <div style="margin-top: 10px;" id="cellendeditevent"></div>
+</div>
+<div id="addpopupWindow">
+    <div>Add Spare</div>
+    <div style="overflow: hidden;">
+        <form method="post" id="sparesubmitform" name="sparesubmitform" action="">
+            <table>
+                <tr><td>First Name:</td>
+                    <td><input id="fnameList" name="fnameList"></input></td></tr>
+                <tr><td>Last Name:</td>
+                    <td><input id="lnameList" name="lnameList"></input></td></tr>
+                <tr><td>Phone:</td>
+                    <td><input id="phoneList" name="phoneList"></input></td></tr>
+                <tr><td>email:</td>
+                    <td><input id="emailList" name="emailList"></input></td></tr>
+                <tr><td>Profile:</td>
+                    <td><textarea id="profileList" name="profileList"></textarea></td></td></tr>
+                <tr><td></td>
+                    <td style="padding-top: 10px;"><input style="margin-right: 5px;" type="Button" id="addplayer" class="save-team edit-mode" value="Add Spare" /><input id="Cancel" type="button" value="Cancel" /></td></tr>
+            </table>
+        </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById("sparesubmitform").style.visibility = "hidden";
+
+         $("#addpopupWindow").jqxWindow({
+            width: 350, resizable: true, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01
+        });
+
+                    var linkrenderer = function(row, column, value){
+                        var href=value
+                    if(value.indexOf('#') != -1){
+                      value = value.substring(0,value.indexOf('#'));
+                    }
+                   return "<a href=mailto:"+ href + ">" +value + "</a>";
+                    }
+
+        var source = {
+            datatype: "json",
+            datafields: [{ name: 'First_Name', type: 'string' },
+                                { name: 'Last_Name', type: 'string' },
+                                { name: 'Email', type: 'email' },
+                                { name: 'Phone', type: 'phone' },
+                                { name: 'Profile'}],
+            id: 'UID',
+            url: 'services/GetSpares.cshtml/',
+            async: true
+        };
+
+        var pagerrenderer = function () {
+            var element = $("<div style='margin-top: 5px; width: 100%; height: 10%;'></div>");
+            var paginginfo = $("#jqxgrid").jqxGrid('getpaginginformation');
+            for (i = 0; i < paginginfo.pagescount; i++) {
+                // add anchor tag with the page number for each page.
+                var anchor = $("<a style='padding: 5px;' href='#" + i + "'>" + i + "</a>");
+                anchor.appendTo(element);
+                anchor.click(function (event) {
+                    // go to a page.
+                    var pagenum = parseInt($(event.target).text());
+                    $("#jqxgrid").jqxGrid('gotopage', pagenum);
+                });
+            }
+            return element;
+        }
+
+        var dataAdapter = new $.jqx.dataAdapter(source);
+        //console.info(dataAdapter);
+        $("#jqxgrid").jqxGrid({
+            width: '100%',
+            altrows: true,
+            autorowheight: true,
+            autoheight: true,
+            pageable: true,
+            pagerrenderer: pagerrenderer,
+            columnsresize: true,
+            filterable: true,
+            autoshowfiltericon: true,
+            autoshowcolumnsmenubutton: false,
+            enableHover: false,
+            source: dataAdapter,
+            columns: [{ text: 'First Name', datafield: 'First_Name', width: '7.5%' },
+                            { text: 'Last Name', datafield: 'Last_Name', filterable: false, width: '7.5%' },
+                            { text: 'email', datafield: 'Email', filterable: false, width: '25%', cellsrenderer: linkrenderer },
+                            { text: 'Phone', datafield: 'Phone', width: '15%' },
+                            { name: 'Profile', datafield: 'Profile', width: '45%'}]
+        });
+
+        $("#addsparebutton").jqxButton({
+            height: 30
+        });
+        $("#addsparebutton").on('click', function () {
+            //console.log("Entering Add Spare Function");
+            var offset = $("#jqxgrid").offset();
+            $("#addpopupWindow").jqxWindow(
+                                            { position: { x: parseInt(offset.left) + 10, y: parseInt(offset.top) + 0} }
+                                            );
+            $("#addpopupWindow").jqxWindow('open');
+            document.getElementById("sparesubmitform").style.visibility = "visible";
+
+            $("#Cancel").click(function () {
+                console.log("Cancel button pressed")
+                $("#addpopupWindow").jqxWindow('close');
+            });
+
+            $("#addplayer").click(function () {
+                console.log("Entering add player to database Function")
+
+                var row = { addfname: $("#fnameList").val(), addlname: $("#lnameList").val(), addphone: $("#phoneList").val(),
+                    addemail: $("#emailList").val(), addprofile: $("#profileList").val()
+                };
+                //console.log(row);
+                $('#jqxgrid').jqxGrid('updaterow', null, row);
+
+                console.log("Posting to PostSpare.cshtml");
+
+                $.post("Services/PostSpare.cshtml/",
+                           {
+                               addfname: row.addfname,
+                               addlname: row.addlname,
+                               addphone: row.addphone,
+                               addemail: row.addemail,
+                               addprofile: row.addprofile
+                           }
+                           , function (player, status) {
+                               //console.log(player)
+                               alert("Spare Add was a " + status)
+                               $('#playerList').hide();
+                               location.replace("Spares.cshtml")
+                           }, "json");
+
+                $("#popupWindow").jqxWindow('hide');
+            });
+        });
+    });
+
+</script> 
+
+
+<!-- Contact Section -->
+<div id="contact" class="text-left" style="background-color: #b7f4b6">
+  <div class="container">
+    <div class="section-title left">
+      <h1>Get In Touch</h1>
+    </div>
+<h3>Steve Mackey </h3>
+<h3><a href="mailto:s_mackey@telus.net">s_mackey@telus.net</a></h3>
+<h3><a href="tel:403-815-6655">403-589-0173</a></h3></h3>
+    </div>
+</div>

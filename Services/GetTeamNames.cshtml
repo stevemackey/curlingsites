@@ -1,0 +1,10 @@
+﻿@{
+    //var team = UrlData[0].IsEmpty() ? "afa206bf-2710-4f1e-ab5a-9a1412885f97" : UrlData[0].AsEnumerable(); 
+    var league = UrlData[0].IsEmpty() ? "9951e22b-1b1f-4f4b-9db2-bd740f5dba18" : UrlData[0].AsEnumerable();
+    
+    var db = Database.Open("League_DB");
+
+    var sql = "SELECT * FROM Team_tbl where League_ID = @0";
+    var data = db.Query(sql, league);
+    Json.Write(data, Response.Output);     
+}

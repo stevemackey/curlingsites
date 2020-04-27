@@ -1,0 +1,7 @@
+﻿@{
+ Layout = null;
+    var db = Database.Open("League_DB");
+var sql = "SELECT Pool, Team_tbl.Team_Name, SUM(CASE WHEN Results_tbl.Winner_Team_Name_ID = Team_tbl.Team_UID and Tie_Indicator = 0 and Playoff=1 then 1 else 0 end) Wins, SUM(CASE WHEN Results_tbl.Loser_Team_Name_ID = Team_tbl.Team_UID and Tie_Indicator = 0 and Playoff=1 then 1 else 0 end) Losses, SUM(CASE WHEN Tie_Indicator = 1 and Playoff=1 then 1 else 0 end) Ties from Team_tbl Inner JOIN Results_tbl ON (Team_tbl.Team_UID = Results_tbl.Winner_Team_Name_ID or Team_tbl.Team_UID = Results_tbl.Loser_Team_Name_ID) GROUP BY Pool, Team_Name ORDER BY Wins DESC, Ties DESC";
+    var data = db.Query(sql);
+    Json.Write(data, Response.Output);   
+}

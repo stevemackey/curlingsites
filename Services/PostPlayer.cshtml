@@ -1,0 +1,16 @@
+﻿@{
+        var db = Database.Open("League_DB");
+        var postLeagueid = Request["addleagueid"];
+        var postTeamid = Request["addteamid"];
+        var postTeam = Request["addteam"];
+        var postPosition = "Skip";
+
+        var postplayerSQL = "INSERT INTO Team_Profile_tbl (League_ID, Team_ID, Team_Name, Name, Position) VALUES (@0, @1, @2, @3, @4)";
+        db.Execute(postplayerSQL, postLeagueid, postTeamid, postTeam, postTeam, postPosition);  
+       
+        var sql="Select * from Team_tbl";
+        var result = db.Query(sql);
+        Json.Write(result, Response.Output);
+
+
+}

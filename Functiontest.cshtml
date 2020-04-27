@@ -1,0 +1,1171 @@
+﻿@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Schedule Builder";  
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+</head>
+<body style="background-color: #000">
+<div class="container" style="background-color: #bcd4f1; width: 100%">
+    <hgroup class="title">
+        <h1>@Page.Title</h1>
+    </hgroup>
+    <div class="panel-body"> 
+    <p>Schedule Builder allows the administrator add the schedule for your league.</p>
+    <ol>
+        <li>Select your league by <b>clicking on the league name.</b></li>
+        <li>A panel will appear that lists the league administrator's contact information and the schedule.</li>           
+    </ol>          
+                                </ol> 
+           
+                <div id="jqxWidget">
+                <div id="jqxgrid"></div>
+                </div> 
+                <div id="log"></div>
+    </div>
+</div>  
+            
+    <div id="popupleaguedetail" style="font-size: 75%; width: auto; height: auto; padding: 10px; box-sizing: border-box; margin-bottom: 2px">
+        <div>Team Admin</div>
+            <div style="overflow: hidden;">
+                <div><h2>League Contact</h2></div>
+                    <div id="contactjqxWidget">
+                        <div id="contactjqxgrid"></div>
+                    </div>                     
+                <div><h2>Schedule</h2></div>
+                    <div id="schedulejqxWidget">
+                        <div id="myPivotGrid" style="height: 250px; width: auto; background-color: white;"></div>
+                        <div style="margin-top: 30px;">
+                        <input id="addschedbutton" type="button" value="Add Game" />
+                        <input id="editschedbutton" type="button" value="Edit or Delete Game" />
+                        <input id="cancelschedbutton" type="button" value="Cancel" />
+                        <div id="cellbegineditevent"></div>
+                        <div style="margin-top: 10px;" id="cellendeditevent"></div>
+                    </div>         
+                </div>                 
+
+            </div>
+    </div>
+
+<div id="popupscheduleprofile">    
+<div id="teamprofilejqxgrid"></div>
+
+<div style="margin-top: 30px;">
+    <input id="addgamebutton" type="button" value="Add Game" />
+    <div id="cellbegineditevent"></div>
+    <div style="margin-top: 10px;" id="cellendeditevent"></div>
+</div>
+</div>
+
+<div id="addschedpopupWindow">
+    <div>Add Games</div>
+    <div style="overflow: hidden;">   
+        <p id="addtleagueidP">League ID
+            <input id="addtleagueid" name="leagueList"></p>
+        <p id="addtleagueP">League
+            <input id="addtleague" name="leagueList"></p>
+        <p id="addtdateP">Date
+            <input type="date" id="addtdate" name="dateList"></p>
+        <p id="addttimeP">Time
+            <input type="time" id="addttime" name="timeList"></p>
+        <p id="addtpoolP">Pool
+            <input type="text" id="addtpool"></p>
+        <p id="addtplayoffP">Playoff?
+            <select id="addtplayoff" name="playoffList"><option value="0">N</option><option value="1">Y</option></select></p>
+        
+<table id="gameTable" style="width: 100%">
+    <tr>
+        <th>Sheet Number</th>
+        <th>Home Team</th>
+        <th>Away Team</th>
+    </tr>
+    <tr>
+        <td><select id="sheetList1" name="sheetList1">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+        </select></td>
+        <td><select id="homeList1" name="homeList1"></select></td>
+        <td><select id="awayList1" name="awayList1"></select></td>
+    </tr>
+    <tr>
+        <td><select id="sheetList2" name="sheetList2">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+        </select></td>
+        <td><select id="homeList2" name="homeList2"></select></td>
+        <td><select id="awayList2" name="awayList2"></select></td>
+    </tr>
+    <tr>
+        <td><select id="sheetList3" name="sheetList3">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+        </select></td>
+        <td><select id="homeList3" name="homeList3"></select></td>
+        <td><select id="awayList3" name="awayList3"></select></td>
+    </tr>
+    <tr>
+        <td><select id="sheetList4" name="sheetList4">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+        </select></td>
+        <td><select id="homeList4" name="homeList4"></select></td>
+        <td><select id="awayList4" name="awayList4"></select></td>
+    </tr>
+    <tr>
+        <td><select id="sheetList5" name="sheetList5">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+        </select></td>
+        <td><select id="homeList5" name="homeList5"></select></td>
+        <td><select id="awayList5" name="awayList5"></select></td>
+    </tr>
+    <tr>
+        <td><select id="sheetList6" name="sheetList6">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+        </select></td>
+        <td><select id="homeList6" name="homeList6"></select></td>
+        <td><select id="awayList6" name="awayList6"></select></td>
+    </tr>
+        <tr>
+        <td><select id="sheetList7" name="sheetList7">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+        </select></td>
+        <td><select id="homeList7" name="homeList7"></select></td>
+        <td><select id="awayList7" name="awayList7"></select></td>
+    </tr>
+        <tr>
+        <td><select id="sheetList8" name="sheetList8">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+        </select></td>
+        <td><select id="homeList8" name="homeList8"></select></td>
+        <td><select id="awayList8" name="awayList8"></select></td>
+    </tr>
+</table>
+        <p style="padding-top: 10px; color: #000">
+        <input style="margin-right: 5px;" type="Button" id="addteamB" class="save-team edit-mode" value="Add Games" />
+        <input id="canceladd" type="button" value="Cancel" />
+        </p>    
+<!--<div id="jqxgrid"></div>-->
+</div>
+</div>
+
+
+
+<div id="schedpopupWindow" style="width: auto; height: 100%">
+ <div style="overflow: hidden;">      
+    <div><h2>Full League Schedule</h2></div>
+    <div id="schedulegrid"></div>
+    <input id="canceleditdelete" type="button" value="Cancel" />
+</div>
+</div>
+<div id="editschedpopupWindow" style="width: auto; height: 100%">
+    <div><h2>Edit Game</h2></div>
+    <div style="overflow: hidden;">   
+        <p id="edittleagueidP">League ID
+            <input id="edittleagueid" name="leagueList"></p>
+        <p id="edittleagueP">League
+            <input id="edittleague" name="leagueList"></p>
+        <p id="edittgameidP">Game ID
+            <input id="edittgameid"></p>
+        <p id="edittdateP">Date
+            <input type="text" id="edittdate" name="dateList"></p>
+        <p id="editttimeP">Time
+            <input type="text" id="editttime" name="timeList"></p>
+        <p id="editthometeamidP">Home ID
+            <input type="text" id="editthometeamid"></p>
+        <p id="editthometeamP">Home Team
+            <select id="editthometeam"></select></p>
+        <p id="edittawayteamidP">Away ID
+            <input type="text" id="edittawayteamid"></p>
+        <p id="edittawayteamP">Away Team
+            <select id="edittawayteam"></select></p>
+        <p id="editthomesheetP">Sheet
+            <select id="edittsheet">
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+                <option value=6>6</option>
+                <option value=7>7</option>
+                <option value=8>8</option>
+        </select></p>
+        <p id="edittgamesubmitP">Game Submit?
+            <select id="edittgamesubmit"><option value="0">N</option><option value="1">Y</option></select></p>
+        <p id="edittplayoffP">Playoff?
+            <select id="edittplayoff"><option value="0">N</option><option value="1">Y</option></select></p>
+        
+        <p style="padding-top: 10px; color: #000">
+        <input style="margin-right: 5px;" type="Button" id="savegame" class="save-team edit-mode" value="Save Game" />
+        <input id="cancelsave" type="button" value="Cancel" /></p>    
+        </div>
+</div>
+
+<div id="delschedpopupWindow">
+    <div>Delete Team</div>
+        <div style="overflow: hidden;">
+        <p id="deltleagueidP">League ID
+            <input id="deltleagueid" name="leagueList"></p>
+        <p id="deltleagueP">League
+            <input id="deltleague" name="leagueList"></p>
+        <p id="deltgameidP">Game ID
+            <input id="deltgameid"></p>
+        <p id="deltdateP">Date
+            <input type="text" id="deltdate" name="dateList"></p>
+        <p id="delttimeP">Time
+            <input type="text" id="delttime" name="timeList"></p>
+        <p id="delthometeamidP">Home ID
+            <input type="text" id="delthometeamid"></p>
+        <p id="delthometeamP">Home Team
+            <input type="text" id="delthometeam"></p>
+        <p id="deltawayteamidP">Away ID
+            <input type="text" id="deltawayteamid"></p>
+        <p id="deltawayteamP">Away Team
+            <input type="text" id="deltawayteam"></p>
+        <p id="delthomesheetP">Sheet
+            <input type="text" id="deltsheet"></p>
+        <p id="deltgamesubmitP">Game Submit?
+            <input type="text" id="deltgamesubmit"></p>
+        <p id="deltplayoffP">Playoff?
+            <input type="text" id="deltplayoff"></p>
+
+                <p style="padding-top: 10px; color: #000">
+                <input style="margin-right: 5px;" type="button" id="delschedB" class="save-team edit-mode" value="Confirm Delete" />
+                <input id="canceldelete" type="button" value="Cancel" />
+                </p>
+        </div>
+</div>
+
+</body>
+</html>
+<script>
+    $(document).ready(function refreshpage_function() {
+        var homeSelect1 = $('#homeList1');
+        homeSelect1.attr('disabled', true);
+        var homeSelect2 = $('#homeList2');
+        homeSelect2.attr('disabled', true);
+        var homeSelect3 = $('#homeList3');
+        homeSelect3.attr('disabled', true);
+        var homeSelect4 = $('#homeList4');
+        homeSelect4.attr('disabled', true);
+        var homeSelect5 = $('#homeList5');
+        homeSelect5.attr('disabled', true);
+        var homeSelect6 = $('#homeList6');
+        homeSelect6.attr('disabled', true);
+        var homeSelect7 = $('#homeList7');
+        homeSelect7.attr('disabled', true);
+        var homeSelect8 = $('#homeList8');
+        homeSelect8.attr('disabled', true);
+        var awaySelect1 = $('#awayList1');
+        awaySelect1.attr('disabled', true);
+        var awaySelect2 = $('#awayList2');
+        awaySelect2.attr('disabled', true);
+        var awaySelect3 = $('#awayList3');
+        awaySelect3.attr('disabled', true);
+        var awaySelect4 = $('#awayList4');
+        awaySelect4.attr('disabled', true);
+        var awaySelect5 = $('#awayList5');
+        awaySelect5.attr('disabled', true);
+        var awaySelect6 = $('#awayList6');
+        awaySelect6.attr('disabled', true);
+        var awaySelect7 = $('#awayList7');
+        awaySelect7.attr('disabled', true);
+        var awaySelect8 = $('#awayList8');
+        awaySelect8.attr('disabled', true);
+        var leagueuid = [];
+
+        var source = {
+            datatype: "json",
+            datafields: [
+                                                { name: 'League_ID', type: 'string' },
+                                                { name: 'League_Name', type: 'string' },
+                                                { name: 'League_Admin', type: 'string' },
+                                                { name: 'League_Admin_Email', type: 'email' },
+                                                { name: 'League_Admin_Phone', type: 'string'}],
+            id: 'uid',
+            url: '/Services/GetLeague.cshtml/',
+            async: true
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source);
+        $("#jqxgrid").jqxGrid({
+            width: '100%',
+            autoheight: true,
+            altrows: true,
+            source: dataAdapter,
+            selectionmode: 'checkbox',
+            selectionmode: 'singlecell',
+            columns: [
+                                                    { text: 'League', datafield: 'League_Name', width: '20%' },
+                                                    { text: 'Contact', datafield: 'League_Admin', width: '20%' },
+                                                    { text: 'email', datafield: 'League_Admin_Email', width: '20%' },
+                                                    { text: 'Phone', datafield: 'League_Admin_Phone', width: '20%'}]
+
+        });
+
+        // when user clicks on a row for a league invoke the schedule_function
+        $("#jqxgrid").on('cellclick', schedule_function);
+
+        // BUTTON STYLING
+        $("#addschedbutton").jqxButton({ height: 30 });
+        $("#editschedbutton").jqxButton({ height: 30 });
+        $("#cancelschedbutton").jqxButton({ height: 30 });
+        $("#addteamB").jqxButton({ height: 30 });
+        $("#canceladd").jqxButton({ height: 30 });
+        $("#savegame").jqxButton({ height: 30 });
+        $("#cancelsave").jqxButton({ height: 30 });
+        $("#delschedB").jqxButton({ height: 30 });
+        $("#canceldelete").jqxButton({ height: 30 });
+        $("#canceleditdelete").jqxButton({ height: 30 });
+
+        // when user clicks the Add Games button invoke the addgames_function
+        $("#addschedbutton").click(addgames_function);
+
+        // when user clicks the Edit or Delete button invoke the editschedule_function
+        $("#editschedbutton").click(editschedule_function);
+
+        // when user clicks the Cancel schedule button envoke reload_function
+        $("#canceleditdelete").click(reload_function);
+        
+        // when user clicks the Cancel schedule button envoke reload_function
+        $("#cancelschedbutton").click(reload_function);
+
+        // when user clicks the Cancel add schedule button envoke reload_function
+        $("#canceladd").click(reload_function);
+
+        // when user clicks the Add Games button to post the games to the database invoke the postgames_function
+        $('#addteamB').click(postgames_function);
+        
+        // when user clicks the Cancel add game button envoke schedule_function
+        $("#cancelschedbutton").click(schedule_function);
+
+        // when user clicks the Save button when done editing, invoke the savegame_function
+        $("#savegame").click(savegame_function);
+        
+         // when user clicks the Cancel save game button envoke schedule_function
+        $("#cancelsave").click(schedule_function);
+
+        // when user clicks the Delete button invoke the delete_function
+        $("#delschedB").click(delete_function);
+        
+         // when user clicks the Cancel save game button envoke schedule_function
+        $("#canceldelete").click(schedule_function);
+
+        // POPUP WINDOW DEFINITIONS
+        $("#popupscheduleprofile").jqxWindow({ width: "120%", resizable: true, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01, height: "100%" });
+        $("#popupscheduleprofile").on('open', function () { });
+
+        $("#popupleaguedetail").jqxWindow({ width: "100%", resizable: true, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01, height: "100%" });
+        $("#popupleaguedetail").on('open', function () { });
+
+        $("#schedpopupWindow").jqxWindow({ width: "100%", width: "100%", resizable: false, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01 });
+        $("#schedpopupWindow").on('open', function () { });
+
+        $("#addschedpopupWindow").jqxWindow({ width: '100%', height: '100%', resizable: false, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01 });
+        $("#addschedpopupWindow").on('open', function () { });
+
+        $("#editschedpopupWindow").jqxWindow({ width: "100%", width: "100%", resizable: true, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01 });
+        $("#editschedpopupWindow").on('open', function () { });
+
+        $("#delschedpopupWindow").jqxWindow({ width: 350, resizable: false, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01 });
+        $("#delschedpopupWindow").on('open', function () { });
+
+        // FUNCTIONS USED BY SCHEDULE BUILDER INCLUDE LEAGUE SELECTOR, ADD GAME, EDIT OR DELETE GAME
+
+        // reload_function is called to reload the page to refresh the database
+        function reload_function() {
+            location.reload();
+        };
+
+        // schedule_function is called by selecting a league by clicking on the league row in the league list
+        function schedule_function(event) {
+
+            var offset = $("#jqxgrid").offset();
+            $("#popupleaguedetail").jqxWindow({ position: { x: parseInt(offset.left) - 10, y: parseInt(offset.top) - 350} });
+            // event arguments.
+            var args = event.args;
+
+            // row's bound index and uid
+            var rowBoundIndex = event.args.rowindex;
+            var datarow = $("#jqxgrid").jqxGrid('getrowdata', rowBoundIndex);
+            var leagueuid = datarow.League_ID;
+            var selectleague = datarow.League_Name;
+            console.log("Get League ID and League from the selected row");
+
+            // set the leagueid and league name for add team function
+            $("#addtleague").val(selectleague);
+            $("#addtleagueid").val(leagueuid)
+
+
+            // show the popup window.
+            // var selectleague = value
+            var selectleague = leagueuid;
+            $("#popupleaguedetail").jqxWindow('open');
+
+            // Get League contact details
+            var source = {
+                datatype: "json",
+                datafields: [
+                                                    { name: 'League_ID', type: 'string' },
+                                                    { name: 'League_Name', type: 'string' },
+                                                    { name: 'League_Admin', type: 'string' },
+                                                    { name: 'League_Admin_Email', type: 'email' },
+                                                    { name: 'League_Admin_Phone', type: 'string'}],
+                id: 'League_ID',
+                url: '/Services/GetLeagueDetails.cshtml/' + selectleague,
+                async: true
+            };
+            console.log("Display Contact Grid");
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            $("#contactjqxgrid").jqxGrid({
+                width: '100%',
+                autoheight: true,
+                altrows: true,
+                source: dataAdapter,
+                selectionmode: 'checkbox',
+                selectionmode: 'singlecell',
+                columns: [
+                                                    { text: 'League', datafield: 'League_Name', width: '20%' },
+                                                    { text: 'Contact', datafield: 'League_Admin', width: '20%' },
+                                                    { text: 'email', datafield: 'League_Admin_Email', width: '30%' },
+                                                    { text: 'Phone', datafield: 'League_Admin_Phone', width: '20%'}]
+
+            });
+            // Get schedule for selected league and show in a pivot grid
+            var buildpivot = $.getJSON("/Services/GetSchedule.cshtml/" + selectleague, function (data) {
+                console.log("Display the pivot grid");
+                var source =
+                                        {
+                                            localdata: data,
+                                            datatype: "json",
+                                            datafields:
+                                        [
+                                        { name: 'Game_ID', type: 'string' },
+                                        { name: 'League_ID', type: 'string' },
+                                        { name: 'Home_Team_ID', type: 'string' },
+                                        { name: 'Away_Team_ID', type: 'string' },
+                                        { name: 'Date', type: 'string' },
+                                        { name: 'Time', type: 'string' },
+                                        { name: 'League_Name', type: 'string' },
+                                        { name: 'Home_Team', type: 'string' },
+                                        { name: 'Away_Team', type: 'string' },
+                                        { name: 'Sheet', type: 'number' },
+                                        { name: 'Game_Submit', type: 'string' },
+                                        { name: 'Playoff', type: 'string' }
+                                        ]
+                                        };
+
+                var dataAdapter = new $.jqx.dataAdapter(source);
+                dataAdapter.dataBind();
+
+                //console.log(dataAdapter);
+
+                //console.log("show the dataAdapter");
+                //console.log(dataAdapter);
+
+                var getCellValue = function (row, col) {
+                    var currentDateRecords = [];
+                    for (i = 0; i < data.length; i++) {
+                        if (data[i].Date == row.text && data[i].Sheet == col.parentItem.adapterItem.text) {
+                            currentDateRecords.push({ home: data[i].Home_Team, away: data[i].Away_Team });
+                        }
+                    }
+
+                    return currentDateRecords;
+                };
+
+                // create a pivot data source from the dataAdapter
+                var pivotDataSource = new $.jqx.pivot(
+                                                  dataAdapter,
+                                                  {
+                                                      autoresize: 'true',
+                                                      resizable: 'true',
+                                                      pivotValuesOnRows: false,
+                                                      rows: [
+                                                            { dataField: 'Date', resizable: 'false', height: 30 },
+                                                            { dataField: 'Time', resizable: 'false', height: 30 }
+                                                      ],
+                                                      columns: [
+                                                            { dataField: 'Sheet', align: 'Center', resizable: 'true', autoresize: 'true' }
+                                                      ],
+                                                      values: [
+                                                        { dataField: 'Home_Team', text: 'Home Team', align: 'Center' },
+                                                        { dataField: 'Away_Team', text: 'Away Team', align: 'Center' }
+                                                      ]
+                                                  }
+                                                );
+                var isFirst = true;
+
+                $('#myPivotGrid').jqxPivotGrid(
+                                                  {
+                                                      source: pivotDataSource,
+                                                      treeStyleRows: false,
+                                                      multipleSelectionEnabled: true,
+                                                      scrollBarsEnabled: true,
+                                                      selectionEnabled: true,
+                                                      autoResize: false,
+                                                      cellsRenderer: function (pivotCell) {
+                                                          var row = pivotCell.pivotRow;
+                                                          var col = pivotCell.pivotColumn;
+
+                                                          var teams = [];
+                                                          var cellText = '';
+                                                          var hasAdditionalText = false;
+                                                          var size = 25;
+                                                          if (!!pivotCell.value) {
+                                                              teams = getCellValue(row, col);
+                                                              if (col.text == "Away Team") {
+                                                                  cellText = teams[0].away;
+                                                                  cellText.length > 6 ? hasAdditionalText = true : hasAdditionalText = false;
+                                                                  size = 30;
+                                                                  //size = Math.round((cellText.length * 2) / 10) * 20;
+                                                              } else {
+                                                                  cellText = teams[0].home;
+                                                              }
+                                                          }
+
+                                                          if (isFirst && hasAdditionalText) {
+                                                              isFirst = false;
+                                                              setTimeout(function () {
+                                                                  pivotDataSource.rows[0].height = size;
+                                                                  pivotDataSource.dataBind();
+                                                                  $('#myPivotGrid').jqxPivotGrid({ source: pivotDataSource });
+                                                              }, 500);
+                                                          }
+
+                                                          return "<div style='width: calc(100%-8px); height: 100%; padding: 4px; margin: 0px;'>" + cellText + "</div>";
+                                                      }
+                                                  }
+                                );
+            });
+
+
+        };
+
+        // Edit function is invoked by the user clicking on the Edit or Delete Games button
+        function editschedule_function() {
+            $("#editschedpopupWindow").jqxWindow('close');
+            $("#schedpopupWindow").jqxWindow('close');
+            console.log("Entering Edit Function")
+            var selectleague = leagueuid
+            $("#popupleaguedetail").jqxWindow('close');
+            $("#schedpopupWindow").jqxWindow('open');
+            $.getJSON("/Services/GetSchedule.cshtml/" + selectleague, function (data) {
+                var source = {
+                    localdata: data,
+                    datatype: "json",
+                    datafields:
+                                        [
+                                        { name: 'Game_ID', type: 'string' },
+                                        { name: 'League_ID', type: 'string' },
+                                        { name: 'Home_Team_ID', type: 'string' },
+                                        { name: 'Away_Team_ID', type: 'string' },
+                                        { name: 'Date', type: 'string' },
+                                        { name: 'Time', type: 'string' },
+                                        { name: 'League_Name', type: 'string' },
+                                        { name: 'Home_Team', type: 'string' },
+                                        { name: 'Away_Team', type: 'string' },
+                                        { name: 'Sheet', type: 'number' },
+                                        { name: 'Game_Submit', type: 'string' },
+                                        { name: 'Playoff', type: 'string' }
+                                        ]
+                };
+
+                var dataAdapter = new $.jqx.dataAdapter(source);
+                dataAdapter.dataBind();
+
+                $("#schedulegrid").jqxGrid({
+                    width: '100%',
+                    autoheight: false,
+                    altrows: true,
+                    source: dataAdapter,
+                    selectionmode: 'checkbox',
+                    selectionmode: 'singlecell',
+                    columns: [
+
+                                                    { text: 'League', datafield: 'League_Name', width: '10%' },
+                                                    { text: 'Date', datafield: 'Date', width: '10%' },
+                                                    { text: 'Time', datafield: 'Time', width: '10%' },
+                                                    { text: 'Home Team', datafield: 'Home_Team', width: '10%' },
+                                                    { text: 'Away Team', datafield: 'Away_Team', width: '10%' },
+                                                    { text: 'Sheet', datafield: 'Sheet', width: '10%' },
+                                                    { text: 'Playoff', datafield: 'Playoff', width: '10%' },
+                                                    { text: 'Game Submit', datafield: 'Game_Submit', width: '10%' },
+                                                    { text: '', datafield: 'Edit', columntype: 'button', width: '10%',
+                                                        cellsrenderer: function () { return "Edit"; },
+                                                        buttonclick: function (row) {
+                                                            console.log("Edit game from schedule")
+                                                            // open the popup window when the user clicks a button.
+                                                            editrow = row;
+                                                            var offset = $("#schedulegrid").offset();
+                                                            $("#editschedpopupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) - 10} });
+                                                            // get the clicked row's data and initialize the input fields.
+                                                            var dataRecord = $("#schedulegrid").jqxGrid('getrowdata', editrow);
+
+                                                            //console.info(dataRecord)
+
+                                                            //Populate the edit fields in the table before displaying it
+                                                            var leagueSelect = $("#edittleague");
+                                                            var leagueidSelect = $("#edittleagueid");
+                                                            var gameidSelect = $("#edittgameid");
+                                                            var dateSelect = $("#edittdate");
+                                                            var timeSelect = $("#editttime");
+                                                            var hometeamidSelect = $("#editthometeamid");
+                                                            var hometeamSelect = $("#editthometeam");
+                                                            var awayteamidSelect = $("#edittawayteamid");
+                                                            var awayteamSelect = $("#edittawayteam");
+                                                            var sheetSelect = $("#edittsheet");
+                                                            var playoffSelect = $("#edittplayoff");
+                                                            var gamesubmitSelect = $("#edittgamesubmit")
+
+                                                            leagueidSelect.attr('disabled', true);
+                                                            leagueSelect.attr('disabled', true);
+                                                            gameidSelect.attr('disabled', true);
+                                                            dateSelect.attr('disabled', false);
+                                                            timeSelect.attr('disabled', false);
+                                                            hometeamidSelect.attr('disabled', true);
+                                                            hometeamSelect.attr('disabled', false);
+                                                            awayteamidSelect.attr('disabled', true);
+                                                            awayteamSelect.attr('disabled', false);
+                                                            sheetSelect.attr('disabled', false);
+                                                            playoffSelect.attr('disabled', false);
+                                                            gamesubmitSelect.attr('disabled', false);
+
+                                                            $("#edittleagueid").val(dataRecord.League_ID);
+                                                            $("#edittleague").val(dataRecord.League_Name);
+                                                            $("#edittgameid").val(dataRecord.Game_ID);
+                                                            $("#edittdate").val(dataRecord.Date);
+                                                            $("#editttime").val(dataRecord.Time);
+                                                            $("#editthometeamid").val(dataRecord.Home_Team_ID);
+                                                            $("#editthometeam").val(dataRecord.Home_Team);
+                                                            $("#edittawayteamid").val(dataRecord.Away_Team_ID);
+                                                            $("#edittawayteam").val(dataRecord.Away_Team);
+                                                            $("#edittsheet").val(dataRecord.Sheet);
+                                                            $("#edittplayoff").val(dataRecord.Playoff);
+                                                            $("#edittgamesubmit").val(dataRecord.Game_Submit);
+
+                                                            // show the popup window.
+                                                            $("#editschedpopupWindow").jqxWindow('open');
+                                                            $.getJSON('/Services/GetTeamNames/', row, function (teamlist) {
+                                                                //console.log(teamlist);
+
+                                                                hometeamSelect.empty();
+                                                                hometeamSelect.append(
+                                                                                                $('<option/>')
+                                                                                                    .attr('value', '')
+                                                                                                    );
+                                                                $.each(teamlist, function (index, data) {
+                                                                    hometeamSelect.append(
+                                                                                                $('<option/>')
+                                                                                                    .attr('value', data.Team_UID)
+                                                                                                    .text(data.Team_Name)
+                                                                            );
+                                                                });
+                                                                awayteamSelect.empty();
+                                                                awayteamSelect.append(
+                                                                                                $('<option/>')
+                                                                                                    .attr('value', '')
+                                                                                                    );
+                                                                $.each(teamlist, function (index, data) {
+                                                                    awayteamSelect.append(
+                                                                                                $('<option/>')
+                                                                                                    .attr('value', data.Team_UID)
+                                                                                                    .text(data.Team_Name)
+                            );
+                                                                });
+                                                            });
+                                                        }
+                                                    }, //end edit function
+                                                    {text: '', datafield: 'Delete', columntype: 'button', width: '10%', cellsrenderer: function () {
+                                                        return "Delete";
+                                                    }, buttonclick: function (row) {
+                                                        console.log("Entering Delete Mode")
+
+                                                        // open the popup window when the user clicks a button.
+                                                        selectrow = row;
+                                                        var offset = $("#schedulegrid").offset();
+                                                        $("#delschedpopupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) - 10} });
+
+                                                        // get the clicked row's data and initialize the input fields.
+                                                        var dataRecord = $("#schedulegrid").jqxGrid('getrowdata', selectrow);
+                                                        //console.log("show the selected row values");
+                                                        //console.log(dataRecord);
+
+                                                        //Populate the delete fields in the table before displaying it
+                                                        var leagueSelect = $("#deltleague");
+                                                        var leagueidSelect = $("#deltleagueid");
+                                                        var gameidSelect = $("#deltgameid");
+                                                        var dateSelect = $("#deltdate");
+                                                        var timeSelect = $("#delttime");
+                                                        var hometeamidSelect = $("#delthometeamid");
+                                                        var hometeamSelect = $("#delthometeam");
+                                                        var awayteamidSelect = $("#deltawayteamid");
+                                                        var awayteamSelect = $("#deltawayteam");
+                                                        var sheetSelect = $("#deltsheet");
+                                                        var playoffSelect = $("#deltplayoff");
+                                                        var gamesubmitSelect = $("#deltgamesubmit")
+
+                                                        leagueidSelect.attr('disabled', true);
+                                                        leagueSelect.attr('disabled', true);
+                                                        gameidSelect.attr('disabled', true);
+                                                        dateSelect.attr('disabled', true);
+                                                        timeSelect.attr('disabled', true);
+                                                        hometeamidSelect.attr('disabled', true);
+                                                        hometeamSelect.attr('disabled', true);
+                                                        awayteamidSelect.attr('disabled', true);
+                                                        awayteamSelect.attr('disabled', true);
+                                                        sheetSelect.attr('disabled', true);
+                                                        playoffSelect.attr('disabled', true);
+                                                        gamesubmitSelect.attr('disabled', true);
+
+                                                        $("#deltleagueid").val(dataRecord.League_ID);
+                                                        $("#deltleague").val(dataRecord.League_Name);
+                                                        $("#deltgameid").val(dataRecord.Game_ID);
+                                                        $("#deltdate").val(dataRecord.Date);
+                                                        $("#delttime").val(dataRecord.Time);
+                                                        $("#delthometeamid").val(dataRecord.Home_Team_ID);
+                                                        $("#delthometeam").val(dataRecord.Home_Team);
+                                                        $("#deltawayteamid").val(dataRecord.Away_Team_ID);
+                                                        $("#deltawayteam").val(dataRecord.Away_Team);
+                                                        $("#deltsheet").val(dataRecord.Sheet);
+                                                        $("#deltplayoff").val(dataRecord.Playoff);
+                                                        $("#deltgamesubmit").val(dataRecord.Game_Submit);
+
+                                                        // show the popup window.
+                                                        $("#delschedpopupWindow").jqxWindow('open');
+                                                    }
+                                                } // end delete function
+                                            ] // close column definition
+                }); // close jqxgrid
+            }); // close schedule grid
+        }; // close editschedule_function
+
+        // The savegame_function is envoke when the user clicks the Save Game button in the editschedule_function
+        function savegame_function() {
+            console.log("Entering Save Game Function")
+            if (editrow >= 0) {
+                var row = {
+                    League_ID: $("#edittleagueid").val(),
+                    League_Name: $("#edittleague").val(),
+                    Game_ID: $("#edittgameid").val(),
+                    Game_Date: $("#edittdate").val(),
+                    Game_Time: $("#editttime").val(),
+                    Home_Team_ID: $("#editthometeam").val(),
+                    Home_Team: $("#editthometeam").text(),
+                    Away_Team_ID: $("#edittawayteam").val(),
+                    Away_Team: $("#edittawayteam").text(),
+                    Sheet: $("#edittsheet").val(),
+                    Playoff: $("#edittplayoff").val(),
+                    Game_Submit: $("#edittgamesubmit").val()
+                };
+
+                $.ajax({
+                    url: "/Services/EditSchedule.cshtml/",
+                    type: "POST",
+                    data:
+                        {
+                            Game_ID: row.Game_ID,
+                            Home_Team_ID: row.Home_Team_ID,
+                            Away_Team_ID: row.Away_Team_ID,
+                            Game_Date: row.Game_Date,
+                            Game_Time: row.Game_Time,
+                            Sheet: row.Sheet,
+                            Game_Submit: row.Game_Submit,
+                            Playoff: row.Playoff
+                        },
+                    success: editschedule_function
+                });
+            } // close if editrow statement
+        };  // close savegame_function
+
+        // Delete Team function called by Delete Button
+        function delete_function() {
+            console.log("Entering Delete Function")
+            if (selectrow >= 0) {
+                var row = { gameid: $("#deltgameid").val(), leagueid: $("#deltleagueid").val() };
+                var rowID = $('#schedulegrid').jqxGrid('getrowid', selectrow);
+                console.log("show selected row information");
+                console.log(row);
+                console.log(rowID);
+                //var deleterow = {};
+
+                //deleterow["Game_ID"] = row.gameid
+
+
+                /*console.log(deleterow);*/
+
+                $('#schedulegrid').jqxGrid('deleterow', rowID);
+
+                $.post("/Services/DeleteGame.cshtml/",
+                                                   { Game_ID: row.gameid }
+                //,{League_ID: row.leagueid}
+                                                   , function (schedule, status) {
+                                                       console.log("Display Status and Result");
+                                                       console.log(status);
+                                                       //console.log(player);
+                                                   }, "json");
+
+                $("#delschedpopupWindow").jqxWindow('hide');
+                $("#schedulegrid").jqxWindow('open');
+            }
+        };
+
+        // Add Games function
+        $("#addtdate").jqxDateTimeInput({ width: '300px', height: '25px' });
+        $("#addttime").jqxDateTimeInput({ formatString: "T", showTimeButton: true, showCalendarButton: false, width: '300px', height: '25px' });
+
+        function addgames_function() {
+            console.log("Entering Add Games Function")
+
+            //setup add team parameters and enable editable fields
+            var leagueSelect = $("#addtleague");
+            var leagueidSelect = $("#addtleagueid");
+            var dateSelect = $("#addtdate");
+            var timeSelect = $("#addttime");
+            var playoffSelect = $("#addtplayoff")
+
+            leagueSelect.attr('disabled', true);
+            leagueidSelect.attr('disabled', true);
+
+            var offset = $("#schedulejqxWidget").offset();
+            $("#addschedpopupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 10, y: parseInt(offset.top) - 300} });
+            $("#addschedpopupWindow").jqxWindow('open');
+
+            var row = { addleague: $("#leagueList").val(), addpool: $("#poolList").val() };
+            console.log("Get Team Names")
+            $.getJSON('/Services/GetTeamNames/', row, function (teamlist) {
+                //console.log(teamlist);
+
+                homeSelect1.attr('disabled', false);
+                document.getElementById("homeList1").style.visibility = "visible";
+                homeSelect1.empty();
+                homeSelect1.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Home Team ---'));
+                $.each(teamlist, function (index, data) {
+                    homeSelect1.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                homeSelect2.attr('disabled', false);
+                document.getElementById("homeList2").style.visibility = "visible";
+                homeSelect2.empty();
+                homeSelect2.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Home Team ---'));
+                $.each(teamlist, function (index, data) {
+                    homeSelect2.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                homeSelect3.attr('disabled', false);
+                document.getElementById("homeList3").style.visibility = "visible";
+                homeSelect3.empty();
+                homeSelect3.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Home Team ---'));
+                $.each(teamlist, function (index, data) {
+                    homeSelect3.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                homeSelect4.attr('disabled', false);
+                document.getElementById("homeList4").style.visibility = "visible";
+                homeSelect4.empty();
+                homeSelect4.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Home Team ---'));
+                $.each(teamlist, function (index, data) {
+                    homeSelect4.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                homeSelect5.attr('disabled', false);
+                document.getElementById("homeList5").style.visibility = "visible";
+                homeSelect5.empty();
+                homeSelect5.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Home Team ---'));
+                $.each(teamlist, function (index, data) {
+                    homeSelect5.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                homeSelect6.attr('disabled', false);
+                document.getElementById("homeList6").style.visibility = "visible";
+                homeSelect6.empty();
+                homeSelect6.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Home Team ---'));
+                $.each(teamlist, function (index, data) {
+                    homeSelect6.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                homeSelect7.attr('disabled', false);
+                document.getElementById("homeList7").style.visibility = "visible";
+                homeSelect7.empty();
+                homeSelect7.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Home Team ---'));
+                $.each(teamlist, function (index, data) {
+                    homeSelect7.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                homeSelect8.attr('disabled', false);
+                document.getElementById("homeList7").style.visibility = "visible";
+                homeSelect8.empty();
+                homeSelect8.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Home Team ---'));
+                $.each(teamlist, function (index, data) {
+                    homeSelect8.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                awaySelect1.attr('disabled', false);
+                document.getElementById("awayList1").style.visibility = "visible";
+                awaySelect1.empty();
+                awaySelect1.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Visiting Team ---'));
+                $.each(teamlist, function (index, data) {
+                    awaySelect1.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                awaySelect2.attr('disabled', false);
+                document.getElementById("awayList2").style.visibility = "visible";
+                awaySelect2.empty();
+                awaySelect2.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Visiting Team ---'));
+                $.each(teamlist, function (index, data) {
+                    awaySelect2.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                awaySelect3.attr('disabled', false);
+                document.getElementById("awayList3").style.visibility = "visible";
+                awaySelect3.empty();
+                awaySelect3.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Visiting Team ---'));
+                $.each(teamlist, function (index, data) {
+                    awaySelect3.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                awaySelect4.attr('disabled', false);
+                document.getElementById("awayList4").style.visibility = "visible";
+                awaySelect4.empty();
+                awaySelect4.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Visiting Team ---'));
+                $.each(teamlist, function (index, data) {
+                    awaySelect4.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                awaySelect5.attr('disabled', false);
+                document.getElementById("awayList5").style.visibility = "visible";
+                awaySelect5.empty();
+                awaySelect5.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Visiting Team ---'));
+                $.each(teamlist, function (index, data) {
+                    awaySelect5.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                awaySelect6.attr('disabled', false);
+                document.getElementById("awayList6").style.visibility = "visible";
+                awaySelect6.empty();
+                awaySelect6.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Visiting Team ---'));
+                $.each(teamlist, function (index, data) {
+                    awaySelect6.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                awaySelect7.attr('disabled', false);
+                document.getElementById("awayList7").style.visibility = "visible";
+                awaySelect7.empty();
+                awaySelect7.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Visiting Team ---'));
+                $.each(teamlist, function (index, data) {
+                    awaySelect7.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+                awaySelect8.attr('disabled', false);
+                document.getElementById("awayList8").style.visibility = "visible";
+                awaySelect8.empty();
+                awaySelect8.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', '')
+                                                                                                .text('--- Select Visiting Team ---'));
+                $.each(teamlist, function (index, data) {
+                    awaySelect8.append(
+                                                                                            $('<option/>')
+                                                                                                .attr('value', data.Team_UID)
+                                                                                                .text(data.Team_Name)
+                                                                        );
+                });
+            });
+        };
+
+
+        function postgames_function() {
+
+            var teamrow = {
+                addleagueid: $("#addtleagueid").val(),
+                adddate: $("#addtdate").val(),
+                addtime: $("#addttime").val(),
+                addpool: $("#addtpool").val(),
+                addplayoff: $("#addtplayoff").val(),
+                addhome1: $("#homeList1").val(),
+                addhome2: $("#homeList2").val(),
+                addhome3: $("#homeList3").val(),
+                addhome4: $("#homeList4").val(),
+                addhome5: $("#homeList5").val(),
+                addhome6: $("#homeList6").val(),
+                addhome7: $("#homeList7").val(),
+                addhome8: $("#homeList8").val(),
+                addaway1: $("#awayList1").val(),
+                addaway2: $("#awayList2").val(),
+                addaway3: $("#awayList3").val(),
+                addaway4: $("#awayList4").val(),
+                addaway5: $("#awayList5").val(),
+                addaway6: $("#awayList6").val(),
+                addaway7: $("#awayList7").val(),
+                addaway8: $("#awayList8").val(),
+                addsheet1: $("#sheetList1").val(),
+                addsheet2: $("#sheetList2").val(),
+                addsheet3: $("#sheetList3").val(),
+                addsheet4: $("#sheetList4").val(),
+                addsheet5: $("#sheetList5").val(),
+                addsheet6: $("#sheetList6").val(),
+                addsheet7: $("#sheetList7").val(),
+                addsheet8: $("#sheetList8").val()
+            };
+            console.log("Store new schedule entry into Schedule_tbl")
+            //console.info(teamrow);
+
+            $.post("/Services/PostSchedule/", teamrow, function (league, status) {
+                console.log("Post was " + status);
+
+                $("#addschedpopupWindow").jqxWindow('close');
+                $("#popupleaguedetail").jqxWindow('close');
+                //console.log(league);
+
+                //console.log("show that fields that will be added to the teamjqxgrid")
+                //console.info(updaterow);
+
+            }, "json");
+        };
+    });
+</script>

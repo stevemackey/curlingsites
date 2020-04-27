@@ -1,0 +1,498 @@
+﻿@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Team Management";  
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+</head>
+<body style="background-color: #000">
+<div class="container" style="background-color: #bcd4f1; width: 100%">
+    <hgroup class="title">
+        <h1>@Page.Title</h1>
+    </hgroup>
+                            <div class="panel-body"> 
+                                <p><b>Team Management allows the administrator to add, edit or delete teams from your league.  If you have multiple pools in your league, Team Management will allow you to update the pool information for each team.</b></p>
+                                <ol>
+                                <li><b>Select your league by clicking on the league name.</b></li>
+                                <li><b>A panel will appear that lists the league administrator's contact information and a list of teams for the selected league.  If teams haven't been created for the league, a message saying "No data to display" will appear.</b></li>
+                                <li><b>To add teams to the league, click on the Add Team button.  A panel will appear that will allow you to enter your teams.  Multiple teams can be entered at once by separating team names with a comma (e.g. Team A, Team B, Team C).  Once you have entered the teams, click the add team button.</b></li>
+                                <li><b>Once teams have been added, you will see the list of teams for the league in the Team Admin panel.  If you run multiple pools in your league, you can edit the teams to add that pool information by clicking the Edit button.</b></li>
+                                <li><b>Pressing Delete will delete the selected team from the league.</b></li>   
+                                <li><b>The next step is to either add players to the teams <a style="color: #0026ff" href="/Admin Tools/Team Profile">Player Management</a>, or build the schedule for the league.<a style="color: #0026ff" href="/Admin Tools/ScheduleBuilder">Schedule Management</a></b></li>            
+                                </ol> 
+           
+                <div id="jqxWidget">
+                <div id="jqxgrid"></div>
+                </div> 
+                <div id="log"></div>
+    </div>
+</div>  
+            
+    <div id="popupleaguedetail">
+        <div>Team Admin</div>
+            <div style="overflow: hidden;">
+                <div><h2>League Contact</h2></div>
+                    <div id="contactjqxWidget">
+                        <div id="contactjqxgrid"></div>
+                    </div>                     
+                
+                <div><h2>Team Listing</h2></div>
+                    <div id="teamjqxWidget">
+                        <div id="teamjqxgrid"></div>
+                                <div style="margin-top: 30px;">
+                                    <input id="addteambutton" type="button" value="Add Team" />
+                                    <div id="cellbegineditevent"></div>
+                                    <div style="margin-top: 10px;" id="cellendeditevent"></div>
+                                </div>         
+                    </div> 
+            </div>
+    </div>
+
+<div id="popupteamprofile">    
+<div id="teamprofilejqxgrid"></div>
+
+<div style="margin-top: 30px;">
+    <input id="addplayerbutton" type="button" value="Add Player" />
+    <div id="cellbegineditevent"></div>
+    <div style="margin-top: 10px;" id="cellendeditevent"></div>
+</div>
+</div>
+
+<div id="addteampopupWindow">
+    <div>Add Team</div>
+    <div style="overflow: hidden;">                    
+        <p id="addtleagueidP">League ID
+                <input style="color: #0026ff" id="addtleagueid" name="leaguelist"></p>    
+        <p id="addtleagueP">League
+                <input style="color: #0026ff" id="addtleague" name="leagueList"></p>
+        <p id="addtteamidP">Team ID
+                <input style="color: #0026ff" id="addtteamid" name="teamlist"></p> 
+        <p id="addtteamP">Team
+                <input style="color: #0026ff" multiple id="addtteam" name="teamList"></p>    
+        <p id="addtpoolP">Pool
+                <input style="color: #0026ff" multiple id="addtpool" name="teamList"></p>    
+
+            <p style="padding-top: 10px; color: #000"><input style="margin-right: 5px;" type="Button" id="addteamB" class="save-team edit-mode" value="Add Team" /><input id="Cancel" type="button" value="Cancel" /></p>
+    </div>
+</div>
+
+
+
+<div id="editteampopupWindow">
+    <div>Edit Team</div>
+        <div style="overflow: hidden;">
+            <p id="edittleagueP">League ID
+                <input style="color: #0026ff" id="edittleagueid" name="leagueList"></p>
+            <p id="edittleagueP">League
+                <input style="color: #0026ff" id="edittleague" name="leagueList"></p>
+            <p id="edittleagueP">Team ID
+                <input style="color: #0026ff" id="edittteamid" name="leagueList"></p>
+            <p id="edittteamP">Team
+                <input style="color: #0026ff" multiple id="edittteam" name="timeList"></p>
+            <p id="edittpoolP">Pool
+                <input style="color: #0026ff" id="edittpool" name="nameList"></p>            
+
+            <p style="padding-top: 10px; color: #000"><input style="margin-right: 5px;" type="button" id="editteamB" class="save-team edit-mode" value="Save" /><input id="Cancel" type="button" value="Cancel" /></p>
+        </div>
+</div>
+<div id="delteampopupWindow">
+    <div>Delete Team</div>
+        <div style="overflow: hidden;">
+            <p id="deltleagueidP">League ID
+                <input style="color: #0026ff" id="deltleagueid"></p>
+            <p id="deltleagueP">League
+                <input style="color: #0026ff" id="deltleague"></p>
+            <p id="deltpoolP">Pool
+                <input style="color: #0026ff" id="deltpool"></p>
+            <p id="deltteamidP">Team ID
+                <input style="color: #0026ff" id="deltteamid"></p>
+            <p id="deltteamP">Team
+                <input style="color: #0026ff" id="deltteam"></p>
+
+                <p style="padding-top: 10px; color: #000"><input style="margin-right: 5px;" type="button" id="delteamB" class="save-team edit-mode" value="Confirm Delete" /><input id="Cancel" type="button" value="Cancel" /></p>
+        </div>
+</div>
+
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+
+        var source = {
+            datatype: "json",
+            datafields: [
+                            { name: 'League_ID', type: 'string' },
+                            { name: 'League_Name', type: 'string' },
+                            { name: 'League_Admin', type: 'string' },
+                            { name: 'League_Admin_Email', type: 'email' },
+                            { name: 'League_Admin_Phone', type: 'string'}],
+            id: 'uid',
+            url: '/Services/GetLeague.cshtml/',
+            async: true
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source);
+        $("#jqxgrid").jqxGrid({
+            width: '100%',
+            autoheight: true,
+            altrows: true,
+            source: dataAdapter,
+            selectionmode: 'checkbox',
+            selectionmode: 'singlecell',
+            columns: [
+                                { text: 'League', datafield: 'League_Name', width: '20%' },
+                                { text: 'Contact', datafield: 'League_Admin', width: '20%' },
+                                { text: 'email', datafield: 'League_Admin_Email', width: '20%' },
+                                { text: 'Phone', datafield: 'League_Admin_Phone', width: '20%'}]
+
+        });
+
+        $("#jqxgrid").on('cellclick', function (event) {
+
+            var offset = $("#jqxgrid").offset();
+            $("#popupleaguedetail").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) - 300} });
+            // event arguments.
+            var args = event.args;
+
+            // row's bound index and uid
+            var rowBoundIndex = event.args.rowindex;
+            var datarow = $("#jqxgrid").jqxGrid('getrowdata', rowBoundIndex);
+            var leagueuid = datarow.League_ID;
+            var selectleague = datarow.League_Name;
+            console.log("League_ID= " + leagueuid, "League_Name= " + selectleague);
+
+            // set the leagueid and league name for add team function
+            $("#addtleague").val(selectleague);
+            $("#addtleagueid").val(leagueuid)
+
+
+            // show the popup window.
+            // var selectleague = value
+            var selectleague = leagueuid;
+            $("#popupleaguedetail").jqxWindow('open');
+
+            // Get League contact details
+            var source = {
+                datatype: "json",
+                datafields: [
+                                { name: 'League_ID', type: 'string' },
+                                { name: 'League_Name', type: 'string' },
+                                { name: 'League_Admin', type: 'string' },
+                                { name: 'League_Admin_Email', type: 'email' },
+                                { name: 'League_Admin_Phone', type: 'string'}],
+                id: 'League_ID',
+                url: '/Services/GetLeagueDetails.cshtml/' + selectleague,
+                async: true
+            };
+            console.log("Display Contact Grid");
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            $("#contactjqxgrid").jqxGrid({
+                width: '100%',
+                autoheight: true,
+                altrows: true,
+                source: dataAdapter,
+                selectionmode: 'checkbox',
+                selectionmode: 'singlecell',
+                columns: [
+                                { text: 'League', datafield: 'League_Name', width: '20%' },
+                                { text: 'Contact', datafield: 'League_Admin', width: '20%' },
+                                { text: 'email', datafield: 'League_Admin_Email', width: '20%' },
+                                { text: 'Phone', datafield: 'League_Admin_Phone', width: '20%'}]
+
+            });
+
+            //Get Team List for Selected League
+
+            var source = {
+                datatype: "json",
+                datafields: [
+                                    { name: 'League_ID', type: 'string' },
+                                    { name: 'League_Name', type: 'string' },
+                                    { name: 'League_ID', type: 'string' },
+                                    { name: 'Team_UID', type: 'string' },
+                                    { name: 'Team_Name', type: 'string' },
+                                    { name: 'Pool', type: 'email'}],
+                id: 'uid',
+                url: '/Services/GetTeamNames.cshtml/' + selectleague,
+                async: true
+            };
+            console.log("Display Team Grid");
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            $("#teamjqxgrid").jqxGrid({
+                width: '100%',
+                autoheight: true,
+                altrows: true,
+                source: dataAdapter,
+                selectionmode: 'checkbox',
+                selectionmode: 'singlecell',
+                columns: [
+                                { text: 'League', datafield: 'League_Name', width: '20%' },
+                                { text: 'Team', datafield: 'Team_Name', width: '20%' },
+                                { text: 'Pool', datafield: 'Pool', width: '20%' },
+                                { text: '', datafield: 'Edit', columntype: 'button', width: '10%', cellsrenderer: function () {
+                                    return "Edit";
+                                }, buttonclick: function (row) {
+                                    console.log("Entering Edit Mode")
+                                    // open the popup window when the user clicks a button.
+                                    editrow = row;
+
+                                    var offset = $("#jqxgrid").offset();
+                                    $("#editteampopupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) - 300} });
+                                    // get the clicked row's data and initialize the input fields.
+                                    var dataRecord = $("#teamjqxgrid").jqxGrid('getrowdata', editrow);
+                                    //console.info(dataRecord)
+
+                                    //Populate the edit fields in the table before displaying it
+                                    var leagueSelect = $("#edittleague");
+                                    var leagueidSelect = $("#edittleagueid");
+                                    var teamSelect = $("#edittteam");
+                                    var teamidSelect = $("#edittteamid");
+                                    var poolSelect = $("#edittpool")
+                                    teamSelect.attr('disabled', false);
+                                    teamidSelect.attr('disabled', true);
+                                    poolSelect.attr('disabled', false);
+                                    leagueSelect.attr('disabled', true);
+                                    leagueidSelect.attr('disabled', true);
+                                    $("#edittleagueid").val(dataRecord.League_ID);
+                                    $("#edittleague").val(dataRecord.League_Name);
+                                    $("#edittpool").val(dataRecord.Pool);
+                                    $("#edittteamid").val(dataRecord.Team_UID);
+                                    $("#edittteam").val(dataRecord.Team_Name);
+
+                                    // show the popup window.
+                                    $("#editteampopupWindow").jqxWindow('open');
+                                }
+                                },
+                                        { text: '', datafield: 'Delete', columntype: 'button', width: '10%', cellsrenderer: function () {
+                                            return "Delete";
+                                        }, buttonclick: function (row) {
+                                            console.log("Entering Delete Mode")
+
+                                            // open the popup window when the user clicks a button.
+                                            selectrow = row;
+                                            var offset = $("#jqxgrid").offset();
+                                            $("#delteampopupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) - 300} });
+
+                                            // get the clicked row's data and initialize the input fields.
+                                            var dataRecord = $("#teamjqxgrid").jqxGrid('getrowdata', selectrow);
+                                            //console.log("show the selected row values");
+                                            //console.log(dataRecord);
+
+                                            //Populate the delete fields in the table before displaying it
+                                            var leagueSelect = $("#deltleague");
+                                            var leagueidSelect = $("#deltleagueid");
+                                            var teamSelect = $("#deltteam");
+                                            var teamidSelect = $("#deltteamid");
+                                            var poolSelect = $("#deltpool")
+                                            teamSelect.attr('disabled', true);
+                                            teamidSelect.attr('disabled', true);
+                                            poolSelect.attr('disabled', true);
+                                            leagueSelect.attr('disabled', true);
+                                            leagueidSelect.attr('disabled', true);
+                                            $("#deltleagueid").val(dataRecord.League_ID);
+                                            $("#deltleague").val(dataRecord.League_Name);
+                                            $("#deltpool").val(dataRecord.Pool);
+                                            $("#deltteamid").val(dataRecord.Team_UID);
+                                            $("#deltteam").val(dataRecord.Team_Name);
+
+                                            // show the popup window.
+                                            $("#delteampopupWindow").jqxWindow('open');
+                                        }
+                                        }
+
+                                        ]
+
+            });
+        });
+
+        $("#popupteamprofile").jqxWindow({width: "100%", resizable: true, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01, height: "100%"});
+        $("#popupteamprofile").on('open', function () {});
+
+        $("#popupleaguedetail").jqxWindow({width: "100%", resizable: true, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01, height: "100%"});
+        $("#popupleaguedetail").on('open', function () {});
+
+        $("#addteampopupWindow").jqxWindow({
+            width: 350, resizable: false, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01
+        });
+        $("#addteampopupWindow").on('open', function () {
+            $("#addtleague").jqxInput('selectAll');
+        });
+
+        $("#editteampopupWindow").jqxWindow({
+            width: 350, resizable: false, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01
+        });
+        $("#editteampopupWindow").on('open', function () {
+            $("#edittleague").jqxInput('selectAll');
+        });
+
+        $("#delteampopupWindow").jqxWindow({
+            width: 350, resizable: false, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01
+        });
+        $("#delteampopupWindow").on('open', function () {
+            $("#deltleague").jqxInput('selectAll');
+        });
+
+        // Add team function
+
+        $("#addteambutton").jqxButton({
+            height: 30
+        });
+
+        $("#addteambutton").on('click', function () {
+            console.log("Entering Add Team Function")
+
+            //setup add team parameters and enable editable fields
+            var leagueSelect = $("#addtleague");
+            var leagueidSelect = $("#addtleagueid");
+            var teamSelect = $("#addtteam");
+            var teamidSelect = $("#addtteamid");
+            var poolSelect = $("#addtpool")
+            teamSelect.attr('disabled', false);
+            teamSelect.empty();
+            teamidSelect.attr('disabled', true);
+            teamidSelect.empty();
+            poolSelect.attr('disabled', false);
+            poolSelect.empty();
+            leagueSelect.attr('disabled', true);
+            leagueidSelect.attr('disabled', true);
+
+            var offset = $("#teamjqxWidget").offset();
+            $("#addteampopupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 10, y: parseInt(offset.top) - 300} });
+            $("#addteampopupWindow").jqxWindow('open');
+
+        });
+
+        $('#addteamB').click(function () {
+
+            var teamrow = { addteam: $("#addtteam").val(), addpool: $("#addtpool").val() };
+            //console.log("show added team and pool")
+            //console.info(teamrow);
+
+            var teams = teamrow.addteam.split(', ');
+            $("#teamjqxgrid").jqxGrid('beginupdate');
+            $.each(teams, function (i, val) {
+                console.log(i + ": " + val);
+                var row = { addleagueid: $("#addtleagueid").val(), addleague: $("#addtleague").val(), addteam: val, addpool: $("#addtpool").val() };
+
+                var updaterow = {};
+                updaterow["League_ID"] = row.addleagueid;
+                updaterow["League_Name"] = row.addleague;
+                updaterow["Team_Name"] = row.addteam;
+                updaterow["Pool"] = row.addpool;
+
+                // console.log("show the parameters that will be passed to Postteam")
+                // console.info(row);
+
+
+                $.post("/Services/Postteam/", row, function (league, status) {
+                    console.log("show what was passed back from Postteam")
+                    console.log(status)
+                    //console.log(league);
+
+                    //console.log("show that fields that will be added to the teamjqxgrid")
+                    //console.info(updaterow);
+                    $('#teamjqxgrid').jqxGrid('addrow', updaterow.uid, updaterow);
+
+                }, "json");
+            });
+            $("#teamjqxgrid").jqxGrid('endupdate');
+            $("#addteampopupWindow").jqxWindow('hide');
+            $("#popupleaguedetail").jqxWindow('open');
+        });
+
+
+
+        // Save team function called by Save Button
+        $("#editteamB").click(function () {
+            console.log("Entering Save Function")
+            if (editrow >= 0) {
+                var row = { leagueid: $("#edittleagueid").val(), league: $("#edittleague").val(), teamid: $("#edittteamid").val(), team: $("#edittteam").val(), pool: $("#edittpool").val() };
+
+                var rowID = $('#teamjqxgrid').jqxGrid('getrowid', editrow);
+                var updaterow = {};
+                updaterow["League_ID"] = row.leagueid;
+                updaterow["League_Name"] = row.league;
+                updaterow["Team_UID"] = row.teamid;
+                updaterow["Team_Name"] = row.team;
+                updaterow["Pool"] = row.pool;
+
+                /*console.log("rowID = " + rowID);
+                console.log("leagueid" + row.leagueid);
+                console.info("league=" + row.league);
+                console.info("teamid=" + row.teamid);
+                console.info("team=" + row.team);
+                console.info("pool=" + row.pool);
+                console.info("updaterow = ");
+                console.log(updaterow);*/
+                $('#teamjqxgrid').jqxGrid('updaterow', rowID, updaterow);
+                /*console.log("row= ");
+                console.log(row);*/
+
+
+                $.post("/Services/EditTeams.cshtml/",
+                                   {
+                                       Team_ID: row.teamid,
+                                       Team: row.team,
+                                       Pool: row.pool
+                                   }
+                                   , function (player, status) {
+                                       console.log("Display Status and Result");
+                                       console.log(status);
+                                       //console.log(player);
+                                   }, "json");
+
+                $("#editteampopupWindow").jqxWindow('hide');
+                $("#popupleaguedetail").jqxWindow('open');
+            }
+        });
+
+        // Delete Team function called by Delete Button
+        $("#delteamB").click(function () {
+            console.log("Entering Delete Function")
+            if (selectrow >= 0) {
+                var row = { leagueid: $("#deltleagueid").val(), league: $("#deltleague").val(), teamid: $("#deltteamid").val(), team: $("#deltteam").val(), pool: $("#deltpool").val() };
+                //var row = { team: $("#deltteam").val(), league: $("#deltleague").val() };
+                var rowID = $('#teamjqxgrid').jqxGrid('getrowid', selectrow);
+                /*console.log("show selected row information");
+                console.log(row);
+                console.log(rowID);*/
+                var deleterow = {};
+
+                deleterow["League_ID"] = row.leagueid;
+                deleterow["League_Name"] = row.league;
+                deleterow["Team_UID"] = row.teamid;
+                deleterow["Team_Name"] = row.team;
+                deleterow["Pool"] = row.pool;
+
+                /*console.log("rowID = " + rowID);
+                console.log("leagueid" + row.leagueid);
+                console.info("league=" + row.league);
+                console.info("teamid=" + row.teamid);
+                console.info("team=" + row.team);
+                console.info("pool=" + row.pool);
+                console.info("deleterow = ");
+                console.log(deleterow);*/
+
+                $('#teamjqxgrid').jqxGrid('deleterow', rowID);
+
+                $.post("/Services/DeleteTeams.cshtml/",
+                                   {
+                                       Team_ID: row.teamid
+                                   }
+                                   , function (player, status) {
+                                       console.log("Display Status and Result");
+                                       console.log(status);
+                                       //console.log(player);
+                                   }, "json");
+
+                $("#delteampopupWindow").jqxWindow('hide');
+                $("#popupleaguedetail").jqxWindow('open');
+            }
+        });
+
+    });
+</script>

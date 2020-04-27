@@ -1,0 +1,198 @@
+/* Generic Selectors */
+ 
+body {
+   font-family: Georgia, "Times New Roman", Times, serif;
+   font-size: 14px;
+   color: #333333;
+   background-color: #F9F9F9;
+}
+ 
+p {
+   width: 80%;
+}
+ 
+li {
+   list-style-type: disc;
+   line-height: 150%;
+}
+ 
+h1 {
+   font-family: Georgia, "Times New Roman", Times, serif;
+   font-size: 18px;
+   font-weight: bold;
+   color: #000000;
+}
+ 
+h2 {
+   font-family: Georgia, "Times New Roman", Times, serif;
+   font-size: 16px;
+   font-weight: bold;
+   color: #000000;
+   border-bottom: 1px solid #C6EC8C;
+}
+ 
+/**************** Pseudo classes ****************/
+ 
+a:link {
+   color: #00CC00;
+   text-decoration: underline;
+   font-weight: bold;
+}
+ 
+li :link {
+   color: #00CC00;
+   text-decoration: none;
+   font-weight: bold;
+}
+ 
+a:visited {
+   color: #00CC00;
+   text-decoration: underline;
+   font-weight: bold;
+}
+ 
+li a:visited {
+   color: #00CC00;
+   text-decoration: none;
+   font-weight: bold;
+}
+ 
+a:hover {
+   color: rgb(0, 96, 255);
+   padding-bottom: 5px;
+   font-weight: bold;
+   text-decoration: underline;
+}
+ 
+li a:hover {
+   display: block;
+   color: rgb(0, 96, 255);
+   padding-bottom: 5px;
+   font-weight: bold;
+   border-bottom-width: 1px;
+   border-bottom-style: solid;
+   border-bottom-color: #C6EC8C;
+}
+ 
+a:active {
+   color: rgb(255, 0, 102);
+   font-weight: bold;
+}
+ 
+/************************* ID's *************************/
+ 
+#headline {
+
+	    text-align: left;  
+        background-image: url("/Images/Curling Banner.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 50px 0 0px 20%; /*top right bottom left*/
+   }
+/* Navigation */
+#menu {
+	padding: 20px;
+	transition: all 0.8s;
+}
+#menu.navbar-default {
+	background-color: rgba(248, 248, 248, 0);
+	border-color: rgba(231, 231, 231, 0);
+}
+#menu a.navbar-brand {
+	font-size: 20px;
+	color: rgba(255,255,255,0.7);
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+#menu a.navbar-brand i.fa {
+	font-size: 18px;
+	color: #54d0dd;
+	vertical-align: top;
+}
+#menu.navbar-default .navbar-nav > li > a {
+	text-transform: uppercase;
+	color: rgba(255,255,255,0.7);
+	font-size: 12px;
+	letter-spacing: 1px;
+}
+#menu.navbar-default .navbar-nav > li > a:hover {
+	color: #54d0dd;
+}
+.on {
+	background-color: #343b42 !important;
+	padding: 0 !important;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+	color: #54d0dd !important;
+	background-color: transparent;
+}
+.navbar-toggle {
+	border-radius: 0;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+	background-color: #54d0dd;
+	border-color: #54d0dd;
+}
+.navbar-default .navbar-toggle:hover>.icon-bar {
+	background-color: #FFF;
+}
+.section-title {
+	padding-bottom: 50px;
+}
+.btn-custom {
+	text-transform: uppercase;
+	color: #414a52;
+	background-color: #54d0dd;
+	border: 0;
+	padding: 14px 20px;
+	margin: 0;
+	font-size: 16px;
+	border-radius: 0;
+	margin-top: 20px;
+	transition: all 0.3s;
+}
+.btn-custom:hover, .btn-custom:focus, .btn-custom.focus, .btn-custom:active, .btn-custom.active {
+	color: #54d0dd;
+	background-color: #414a52;
+}
+.btn-default {
+	text-transform: uppercase;
+	color: #54d0dd;
+	background-color: #414a52;
+	border: 0;
+	padding: 14px 20px;
+	margin: 0;
+	font-size: 16px;
+	border-radius: 0;
+	margin-top: 20px;
+	transition: all 0.3s;
+}
+.btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active {
+    color: #54d0dd;
+    background-color: #343b42;
+}
+ 
+#centerDoc {
+   position: absolute;
+   padding: 0 0 20px 0; /*top right bottom left*/
+   margin-top: 50px;
+   margin-left: 235px;
+}
+
+
+/* Footer Section*/
+#footer {
+	background: #343b42;
+	color: rgba(255,255,255,0.4);
+	padding: 30px 0 25px 0;
+}
+#footer p {
+	font-size: 13px;
+}
+#footer a {
+	color: rgba(255,255,255,0.7);
+}
+#footer a:hover {
+	color: #54d0dd;
+}

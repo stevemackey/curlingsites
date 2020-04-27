@@ -1,0 +1,8 @@
+﻿@{
+ Layout = null;
+    var db = Database.Open("League_DB");
+    var leagueid = UrlData[0].IsEmpty() ? "8a2ee5d8-ce55-41bd-ad1b-0bce215e9797" : UrlData[0].AsEnumerable(); 
+    var sql = "Select Sheet_Number, AVG(Ice_Rating) AS RatingAvg from Results_tbl WHERE League_ID = @0 Group by Sheet_Number";
+    var data = db.Query(sql, leagueid);
+    Json.Write(data, Response.Output);   
+}

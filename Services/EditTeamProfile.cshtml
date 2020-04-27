@@ -1,0 +1,17 @@
+﻿@{
+        var db = Database.Open("League_DB");
+
+        var postTeamProfileid = Request["Team_Profile_ID"];
+        var postName = Request["Name"];
+        var postPosition = Request["Position"];
+        var postEmail = Request["Email"];
+        var postPhone = Request["Phone_Number"];
+        
+        var updateplayer = "Update Team_Profile_tbl Set Name= @1 , Position = @2, Email = @3, Phone_Number = @4 Where Team_Profile_ID=@0";       
+        db.Execute(updateplayer, postTeamProfileid, postName, postPosition, postEmail, postPhone);   
+        
+        var sql="Select Team_Profile_tbl.Team_Profile_ID, League_tbl.League_Name, Team_tbl.Team_Name, Team_Profile_tbl.Name from ((Team_Profile_tbl JOIN League_tbl on Team_Profile_tbl.League_ID = League_tbl.League_ID) JOIN Team_tbl ON Team_Profile_tbl.Team_UID = Team_tbl.Team_UID) where Team_Profile_tbl.Team_Profile_ID = @0";
+
+        var result = db.Query(sql, postTeamProfileid);
+        Json.Write(result, Response.Output);
+}

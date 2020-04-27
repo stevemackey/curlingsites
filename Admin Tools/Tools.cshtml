@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "League Input";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+</head>
+<body style="background-color: #000">
+<div class="container-fluid">
+    <div class="row">
+        <div id="leaguelist" class="col-sm-12">
+            <div style="background-color: #000; border-color: #000" class="panel panel-default">
+                <div class="panel-heading"><h2 style="color: #000">@Page.Title</h2></div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default" >
+                            <div class="panel-heading"> 
+                                <div style="color: #000"><h2>League Administrator Instructions</h2></div>
+                            </div>
+                            <div class="panel-body"> 
+    <p>The Curling League Manager uses a hierarchy to help you manage your league.  The picture below shows how the system works.  Using the administrator tools will enable you to build each layer for your league. These tools include:</p>
+    <ol>
+        <li><b>League Management:</b> Add, edit or delete leagues from the Curling Club</li>
+        <li><b>Team Management:</b> Add, edit or delete teams from a selected league</li>
+        <li><b>Player Management:</b> Add, edit or delete players from a selected team profile</li>
+        <li><b>Schedule Management:</b> Build schedule for a selected league</li>
+    </ol>
+    <img class="img-responsive" src="~/Images/Curling Manager Hierarchy.png" alt="Hierarchy">
+    <h3>How to get started</h3>
+        <ol>
+            <li><b>The first layer that needs to be added is the league.  League Manager allows the adminstrator to add, edit or delete leagues from the curling club.  All current leagues have been added.  Please check League Manager to ensure the league adminstrator's contact information is correct.</b></li>
+            <li><b>The second layer that needs to be added is the list of teams.  Team Management allows the administrator to add, edit or delete teams from your league.  If you have multiple pools in your league, Team Management will allow you to update the pool information for each team.</b></li>
+            <li><b>The third layer that needs to be added is the list of players on each team.  Player Management allows the administrator to add, edit and delete players from each team.  A Team Profile was created for each team you added through the Team Management function.  Only players listed in the team profile will be able to submit game results.  The team profiles can also be used to provide the curling administrator with a list of active members of your league.</b></li>
+            <li><b>Schedule Management is the last step in enabling your league to use the League Management function.  The schedule you build will be used by the league participants to lookup their games and sheets.  It will also be used to electronically submit game results, which will create your league standings.</b></li>            
+        </ol> 
+                            <h3><a style="color: #0026ff" href="/Admin Tools/League Input">League Management</a></h3>
+                            <h3><a style="color: #0026ff" href="/Admin Tools/Team Input">Team Management</a></h3>
+                            <h3><a style="color: #0026ff" href="/Admin Tools/Team Profile">Player Management</a></h3>
+                            <h3><a style="color: #0026ff" href="/Admin Tools/ScheduleBuilder">Schedule Management</a></h3>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                            
+
+                        
+
+        
+    </body>
+</html>

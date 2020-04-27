@@ -1,0 +1,14 @@
+﻿@{
+        var db = Database.Open("League_DB");
+        var postTeamid = Request["Team_ID"];
+        
+        var delteamsql = "Delete from Team_tbl Where Team_UID=@0";
+        db.Execute(delteamsql, postTeamid);    
+ 
+        var delprofilesql = "Delete from Team_Profile_tbl Where Team_UID=@0";
+        db.Execute(delprofilesql, postTeamid);
+        
+        var sql="Select Team_tbl.Team_UID, Team_Profile_tbl.Team_Profile_ID from Team_tbl JOIN Team_Profile_tbl ON Team_tbl.Team_UID = Team_Profile_tbl.Team_UID where Team_tbl.Team_UID = @0";
+        var result = db.Query(sql, postTeamid);
+        Json.Write(result, Response.Output);
+}

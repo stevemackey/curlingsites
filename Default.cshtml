@@ -1,0 +1,266 @@
+﻿@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "League Manager"; 
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    </head>
+    <body>
+        <div class="container" style="background-color: #bcd4f1; width: 100%">
+    <hgroup class="title">
+        <h1>@Page.Title</h1>
+    </hgroup>
+    <div id="leagueselector" class="panel-body"> 
+    <p>League Manager is a web based league management tool from which you can create sports leagues, add teams, build schedules and track league results.  To access an existing league, select the league from the table below.  To create a new league, select Admin Tools from the main menu and follow the instructions.</p>
+        <ol>
+        <li>Select your league by <b>clicking on the league name.</b></li>
+        </ol>
+           
+                <div id="jqxWidget">
+                <div id="jqxgrid"></div>
+                </div> 
+                <div id="log"></div>
+    </div>
+</div>
+    <div id="leaguedetail">
+        <div><h2>League Contact</h2></div>
+            <div id="contactjqxWidget">
+                <div id="contactjqxgrid"></div>
+            </div>  
+                
+        <div><h2>Round 1 Standings</h2></div>
+            <div id="jqxgrid"></div>
+        <div><h2>Round 2 Standings</h2></div>
+            <div id="jqxgrid2"></div>
+         
+        <div class="col-sm-6">
+            <div id="chartContainer3" style="width: 100% ; height: 360px;"></div>
+        </div>
+        
+        <div class="col-sm-6">
+            <div id='chartContainer1' style="width: 100% ; height: 180px;"></div>
+        
+        <div id='chartContainer2' style="width: 100%; height: 180px;"></div>
+        </div>
+
+
+<div id="schedule" >
+        <div><h2>Schedule</h2></div>
+            <div id="schedulejqxWidget">
+                <div id="myPivotGrid" style="height: 400px"></div>
+                <div style="margin-top: 30px;">
+                <div id="cellbegineditevent"></div>
+                <div style="margin-top: 10px;" id="cellendeditevent"></div>
+                </div>         
+            </div>                 
+</div>
+</div>
+
+    </body>
+</html>
+<script>
+    $(document).ready(function refreshpage_function() {
+        var leaguedetail = $('#leaguedetail');
+        leaguedetail.attr('disabled', true)
+        document.getElementById("leaguedetail").style.visibility = "hidden";
+        // Build table of all leagues
+        var source = {
+            datatype: "json",
+            datafields: [
+                                                        { name: 'League_ID', type: 'string' },
+                                                        { name: 'League_Name', type: 'string' },
+                                                        { name: 'League_Admin', type: 'string' },
+                                                        { name: 'League_Admin_Email', type: 'email' },
+                                                        { name: 'League_Admin_Phone', type: 'string'}],
+            id: 'uid',
+            url: '/Services/GetLeague.cshtml/',
+            async: true
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source);
+        $("#jqxgrid").jqxGrid({
+            width: '100%',
+            autoheight: true,
+            altrows: true,
+            source: dataAdapter,
+            selectionmode: 'checkbox',
+            selectionmode: 'singlecell',
+            columns: [
+                                                            { text: 'League', datafield: 'League_Name', width: '20%' },
+                                                            { text: 'Contact', datafield: 'League_Admin', width: '20%' },
+                                                            { text: 'email', datafield: 'League_Admin_Email', width: '20%' },
+                                                            { text: 'Phone', datafield: 'League_Admin_Phone', width: '20%'}]
+
+        });
+        // when user clicks on a row for a league get the league information 
+        $("#jqxgrid").on('cellclick', league_function);
+
+        // league_function is called by selecting a league by clicking on the league row in the league list
+        function league_function(event) {
+            leaguedetail.attr('disabled', false)
+            document.getElementById("leaguedetail").style.visibility = "visible";
+            // event arguments.
+            var args = event.args;
+
+            // row's bound index and uid
+            var rowBoundIndex = event.args.rowindex;
+            var datarow = $("#jqxgrid").jqxGrid('getrowdata', rowBoundIndex);
+            var leagueuid = datarow.League_ID;
+            var selectleague = datarow.League_Name;
+            console.log("Get League ID and League from the selected row");
+
+            // set the leagueid and league name for add team function
+            $("#addtleague").val(selectleague);
+            $("#addtleagueid").val(leagueuid)
+
+            // var selectleague = value
+            var selectleague = leagueuid;
+
+            // Get League contact details
+            var source = {
+                datatype: "json",
+                datafields: [
+                                                            { name: 'League_ID', type: 'string' },
+                                                            { name: 'League_Name', type: 'string' },
+                                                            { name: 'League_Admin', type: 'string' },
+                                                            { name: 'League_Admin_Email', type: 'email' },
+                                                            { name: 'League_Admin_Phone', type: 'string'}],
+                id: 'League_ID',
+                url: '/Services/GetLeagueDetails.cshtml/' + selectleague,
+                async: true
+            };
+            console.log("Display Contact Grid");
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            $("#contactjqxgrid").jqxGrid({
+                width: '100%',
+                autoheight: true,
+                altrows: true,
+                source: dataAdapter,
+                selectionmode: 'checkbox',
+                selectionmode: 'singlecell',
+                columns: [
+                                                            { text: 'League', datafield: 'League_Name', width: '20%' },
+                                                            { text: 'Contact', datafield: 'League_Admin', width: '20%' },
+                                                            { text: 'email', datafield: 'League_Admin_Email', width: '30%' },
+                                                            { text: 'Phone', datafield: 'League_Admin_Phone', width: '20%'}]
+
+            });
+
+
+            // Get schedule for selected league and show in a pivot grid
+            var buildpivot = $.getJSON("/Services/GetSchedule.cshtml/" + selectleague, function (data) {
+                console.log("Display the pivot grid");
+                var source =
+                                                {
+                                                    localdata: data,
+                                                    datatype: "json",
+                                                    datafields:
+                                                [
+                                                { name: 'Game_ID', type: 'string' },
+                                                { name: 'League_ID', type: 'string' },
+                                                { name: 'Home_Team_ID', type: 'string' },
+                                                { name: 'Away_Team_ID', type: 'string' },
+                                                { name: 'Date', type: 'string' },
+                                                { name: 'Time', type: 'string' },
+                                                { name: 'League_Name', type: 'string' },
+                                                { name: 'Home_Team', type: 'string' },
+                                                { name: 'Away_Team', type: 'string' },
+                                                { name: 'Sheet', type: 'number' },
+                                                { name: 'Game_Submit', type: 'string' },
+                                                { name: 'Playoff', type: 'string' }
+                                                ]
+                                                };
+
+                var dataAdapter = new $.jqx.dataAdapter(source);
+                dataAdapter.dataBind();
+
+                //console.log(dataAdapter);
+
+                //console.log("show the dataAdapter");
+                //console.log(dataAdapter);
+
+                var getCellValue = function (row, col) {
+                    var currentDateRecords = [];
+                    for (i = 0; i < data.length; i++) {
+                        if (data[i].Date == row.text && data[i].Sheet == col.parentItem.adapterItem.text) {
+                            currentDateRecords.push({ home: data[i].Home_Team, away: data[i].Away_Team });
+                        }
+                    }
+                    console.log(currentDateRecords);
+                    return currentDateRecords;
+                };
+
+                // create a pivot data source from the dataAdapter
+                var pivotDataSource = new $.jqx.pivot(
+                                                          dataAdapter,
+                                                          {
+                                                              autoresize: 'false',
+                                                              resizable: 'true',
+                                                              pivotValuesOnRows: false,
+                                                              rows: [
+                                                                    { dataField: 'Date', resizable: 'false', height: 30 },
+                                                                    { dataField: 'Time', resizable: 'false', height: 30 }
+                                                              ],
+                                                              columns: [
+                                                                    { dataField: 'Sheet', align: 'Center' }
+                                                              ],
+                                                              values: [
+                                                                { dataField: 'Home_Team', text: 'Home Team', align: 'Center' },
+                                                                { dataField: 'Away_Team', text: 'Away Team', align: 'Center' }
+                                                              ]
+                                                          }
+                                                        );
+                var isFirst = true;
+
+                $('#myPivotGrid').jqxPivotGrid(
+                                                          {
+                                                              source: pivotDataSource,
+                                                              treeStyleRows: false,
+                                                              multipleSelectionEnabled: true,
+                                                              scrollBarsEnabled: true,
+                                                              selectionEnabled: true,
+                                                              autoResize: false,
+                                                              cellsRenderer: function (pivotCell) {
+                                                                  var row = pivotCell.pivotRow;
+                                                                  var col = pivotCell.pivotColumn;
+
+                                                                  var teams = [];
+                                                                  var cellText = '';
+                                                                  var hasAdditionalText = false;
+                                                                  var size = 25;
+                                                                  if (!!pivotCell.value) {
+                                                                      teams = getCellValue(row, col);
+                                                                      if (col.text == "Away Team") {
+                                                                          cellText = teams[0].away;
+                                                                          cellText.length > 6 ? hasAdditionalText = true : hasAdditionalText = false;
+                                                                          size = 30;
+                                                                          //size = Math.round((cellText.length * 2) / 10) * 20;
+                                                                      } else {
+                                                                          cellText = teams[0].home;
+                                                                      }
+                                                                  }
+
+                                                                  if (isFirst && hasAdditionalText) {
+                                                                      isFirst = false;
+                                                                      setTimeout(function () {
+                                                                          pivotDataSource.rows[0].height = size;
+                                                                          pivotDataSource.dataBind();
+                                                                          $('#myPivotGrid').jqxPivotGrid({ source: pivotDataSource });
+                                                                      }, 500);
+                                                                  }
+
+                                                                  return "<div style='width: calc(100%-8px); height: 100%; padding: 4px; margin: 0px;'>" + cellText + "</div>";
+                                                              }
+                                                          }
+                                        );
+            });
+
+
+        };
+    });
+</script>
