@@ -1,8 +1,0 @@
-﻿@{
- Layout = null;
-    var db = Database.Open("League_DB");
-        var leagueid = UrlData[0].IsEmpty() ? "8a2ee5d8-ce55-41bd-ad1b-0bce215e9797" : UrlData[0].AsEnumerable(); 
-    var sql = "SELECT Pool, Team_tbl.Team_Name, SUM(CASE WHEN (Team_tbl.Team_UID = Schedule_tbl.Home_Team_ID or Team_tbl.Team_UID = Schedule_tbl.Away_Team_ID) and Sheet = 1 then 1 else 0 end) One, SUM(CASE WHEN (Team_tbl.Team_UID = Schedule_tbl.Home_Team_ID or Team_tbl.Team_UID = Schedule_tbl.Away_Team_ID) and Sheet = 2 then 1 else 0 end) Two, SUM(CASE WHEN (Team_tbl.Team_UID = Schedule_tbl.Home_Team_ID or Team_tbl.Team_UID = Schedule_tbl.Away_Team_ID) and Sheet = 3 then 1 else 0 end) Three, SUM(CASE WHEN (Team_tbl.Team_UID = Schedule_tbl.Home_Team_ID or Team_tbl.Team_UID = Schedule_tbl.Away_Team_ID) and Sheet = 4 then 1 else 0 end) Four, SUM(CASE WHEN (Team_tbl.Team_UID = Schedule_tbl.Home_Team_ID or Team_tbl.Team_UID = Schedule_tbl.Away_Team_ID) and Sheet = 5 then 1 else 0 end) Five, SUM(CASE WHEN (Team_tbl.Team_UID = Schedule_tbl.Home_Team_ID or Team_tbl.Team_UID = Schedule_tbl.Away_Team_ID) and Sheet = 6 then 1 else 0 end) Six from Team_tbl Inner JOIN Schedule_tbl ON (Team_UID = Schedule_tbl.Home_Team_ID or Team_tbl.Team_UID = Schedule_tbl.Away_Team_ID) WHERE Schedule_tbl.League_ID = @0 GROUP BY Pool, Team_Name ORDER BY Pool, Team_Name ASC";
-    var data = db.Query(sql, leagueid);
-    Json.Write(data, Response.Output);   
-}

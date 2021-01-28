@@ -1,8 +1,0 @@
-@{
-    Layout = null;
-    var db = Database.Open("Seniors");
-    var fullTable = "SELECT convert(nvarchar,Game_Date,107) as Date, Game_Date, convert(nvarchar(5),Game_Time,108) as Time, Sheet_Number, Game FROM Schedule WHERE Game_ID IS NOT NULL Order by Game_Date, Game_Time, Sheet_Number";
-//    var fullTable = "SELECT convert(nvarchar,Game_Date,107) as Date, Game_Date, convert(nvarchar(5),Game_Time,108) as Time, Sheet_Number, Game FROM Schedule WHERE Game_ID IS NOT NULL Order by Game_Date, Game_Time, Sheet_Number";
-    var data = db.Query(fullTable); 
-    Json.Write(data, Response.Output);
-}

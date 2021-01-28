@@ -1,8 +1,0 @@
-﻿@{
- Layout = null;
-    var db = Database.Open("League_DB");
-    var leagueid = UrlData[0].IsEmpty() ? "8a2ee5d8-ce55-41bd-ad1b-0bce215e9797" : UrlData[0].AsEnumerable(); 
-    var sql = "Select Team_tbl.Team_Name, AVG(Results_tbl.Ice_Rating) AS RatingAvg from Team_tbl join Results_tbl on Team_tbl.Team_UID = Results_tbl.Winner_Team_Name_ID WHERE Results_tbl.League_ID = @0 Group by Team_Name";
-    var data = db.Query(sql, leagueid);
-    Json.Write(data, Response.Output);   
-}

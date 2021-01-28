@@ -1,8 +1,0 @@
-﻿@{
-        var db = Database.Open("League_DB");
- 
-        var sql="Select * from League_tbl";
-        var result = db.Query(sql);
-        Json.Write(result, Response.Output);
-
-}
