@@ -82,3 +82,4 @@ C:\Users\Steve Mackey\mywebsites\CurlingLeagueManager\obj\Debug\net5.0\Razor\Pag
 C:\Users\Steve Mackey\mywebsites\CurlingLeagueManager\obj\Debug\net5.0\CurlingLeagueManager.Views.pdb
 C:\Users\Steve Mackey\mywebsites\CurlingLeagueManager\obj\Debug\net5.0\CurlingLeagueManager.csproj.CopyComplete
 C:\Users\Steve Mackey\mywebsites\CurlingLeagueManager\obj\Debug\net5.0\CurlingLeagueManager.genruntimeconfig.cache
+C:\Users\Steve Mackey\mywebsites\CurlingLeagueManager\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Facebook.dll
